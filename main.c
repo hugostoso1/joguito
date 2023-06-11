@@ -65,6 +65,7 @@ typedef struct Game
 // Module Functions Declaration (local)
 //------------------------------------------------------------------------------------
 void InitGame(Game *g);        // Initialize game
+void InitBullet(Game *g);
 void UpdateGame(Game *g);      // Update game (one frame)
 void DrawGame(Game *g);        // Draw game (one frame)
 void UpdateDrawFrame(Game *g); // Update and Draw (one frame)
@@ -127,13 +128,20 @@ void InitGame(Game *g)
     g->hero.color = BLACK;
     g->hero.speed = 10;
     g->hero.special = 0;
-    g->hero.bullet.pos = (Rectangle){200,350,STD_SIZE_X,STD_SIZE_Y};
-    g->hero.bullet.color = BLACK;
+   // g->hero.bullet.pos = (Rectangle){200,350,STD_SIZE_X,STD_SIZE_Y};
+   // g->hero.bullet.color = BLACK;
     g->gameover = 0;
     map0_setup(g);
     map1_setup(g);
     map2_setup(g);
     map3_setup(g);
+}
+
+void InitBullet(Game *g)
+{
+    g->hero.bullet.pos = (Rectangle){g->hero.pos.x,g->hero.pos.y,STD_SIZE_X,STD_SIZE_Y};
+    g->hero.bullet.color = BLACK;
+
 }
 
 // Update game (one frame)
