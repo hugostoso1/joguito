@@ -13,6 +13,7 @@ typedef struct Bullet{
     Rectangle pos;
     Color color;
     int speed;
+    int exti;
 }Bullet;
 
 typedef struct Hero
@@ -65,7 +66,7 @@ typedef struct Game
 // Module Functions Declaration (local)
 //------------------------------------------------------------------------------------
 void InitGame(Game *g);        // Initialize game
-void InitBullet(Game *g);
+void InitBullet(Bullet *g);
 void UpdateGame(Game *g);      // Update game (one frame)
 void DrawGame(Game *g);        // Draw game (one frame)
 void UpdateDrawFrame(Game *g); // Update and Draw (one frame)
@@ -137,10 +138,10 @@ void InitGame(Game *g)
     map3_setup(g);
 }
 
-void InitBullet(Game *g)
+void InitBullet(Bullet *g)
 {
-    g->hero.bullet.pos = (Rectangle){g->hero.pos.x,g->hero.pos.y,STD_SIZE_X,STD_SIZE_Y};
-    g->hero.bullet.color = BLACK;
+    //g->pos = (Rectangle){g->pos.x,g->pos.y,STD_SIZE_X,STD_SIZE_Y};
+    g->color = BLACK;
 
 }
 
@@ -148,6 +149,10 @@ void InitBullet(Game *g)
 void UpdateGame(Game *g)
 {
     update_hero_pos(g);
+    if(g->hero.bullet.exti == 1){
+        bullet_move(g);
+    }
+
 
     Map *map = &g->maps[g->curr_map];
     for (int i; i < map->num_enemies; i++)
@@ -204,6 +209,8 @@ void DrawGame(Game *g)
     draw_map(g);
 
     DrawRectangleRec(g->hero.pos, g->hero.color);
+    if(g->hero.bullet.exti == 1)
+    DrawRectangleRec(g->hero.bullet.pos, g->hero.bullet.color);
 
     EndDrawing();
 }
@@ -289,14 +296,14 @@ void update_hero_pos(Game *g)
     }
     else if(IsKeyPressed(KEY_SPACE))
     {
-        bullet_move(g);
+        g->hero.bullet.exti=1;
     }
 }
 
 void bullet_move(Game *g){
     Hero *h = &g->hero;
     Bullet *b = &g->hero.bullet;
-    InitBullet(g);
+    InitBullet(b);
     b->pos.x = h->pos.x;
     b->pos.y = h->pos.y;
     b->pos.x += b->speed;
