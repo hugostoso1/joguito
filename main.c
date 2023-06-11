@@ -79,7 +79,8 @@ void draw_borders(Game *g);
 void draw_map(Game *g);
 void update_enemy_pos(Game *g, Enemy *e);
 void update_hero_pos(Game *g);
-void bullet_move(Game *g);
+void shoot(Bullet *b, char direction, Rectangle *position);
+void update_bullet_pos(Bullet *b);
 
 int barrier_collision(Map *m, Rectangle *t);
 void map0_setup(Game *g);
@@ -130,7 +131,7 @@ void InitGame(Game *g)
     g->hero.color = BLACK;
     g->hero.speed = 10;
     g->hero.special = 0;
-    g->hero.active = 0;
+    g->hero.bullet.active = 0;
    // g->hero.bullet.pos = (Rectangle){200,350,STD_SIZE_X,STD_SIZE_Y};
     g->hero.bullet.color = BLACK;
     g->hero.bullet.speed = 6;
@@ -267,7 +268,7 @@ void update_hero_pos(Game *g)
         if (barrier_collision(m, &h->pos))
             h->pos.x += h->speed;
         
-        shoot(b, 'L', h->pos);
+        shoot(b, 'L', &h->pos);
     }
     else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
     {
@@ -276,7 +277,7 @@ void update_hero_pos(Game *g)
         if (barrier_collision(m, &h->pos))
             h->pos.x -= h->speed;
         
-        shoot(b, 'R', h->pos);
+        shoot(b, 'R', &h->pos);
     }
     else if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
     {
@@ -285,7 +286,7 @@ void update_hero_pos(Game *g)
         if (barrier_collision(m, &h->pos))
             h->pos.y += h->speed;
         
-        shoot(b, 'U', h->pos);
+        shoot(b, 'U', &h->pos);
     }
     else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
     {
@@ -294,7 +295,7 @@ void update_hero_pos(Game *g)
         if (barrier_collision(m, &h->pos))
             h->pos.y -= h->speed;
         
-        shoot(b, 'D', h->pos);
+        shoot(b, 'D', &h->pos);
     }
 }
 
