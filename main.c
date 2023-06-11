@@ -12,9 +12,9 @@
 typedef struct Bullet{
     Rectangle pos;
     Color color;
-    char direction;
     int speed;
     int active;
+    char direction;
 }Bullet;
 
 typedef struct Hero
@@ -131,10 +131,10 @@ void InitGame(Game *g)
     g->hero.color = BLACK;
     g->hero.speed = 10;
     g->hero.special = 0;
+    g->hero.bullet.pos = (Rectangle){100,20,STD_SIZE_X,STD_SIZE_Y};
+    g->hero.bullet.color = PURPLE;
+    g->hero.bullet.speed = 25;
     g->hero.bullet.active = 0;
-   // g->hero.bullet.pos = (Rectangle){200,350,STD_SIZE_X,STD_SIZE_Y};
-    g->hero.bullet.color = BLACK;
-    g->hero.bullet.speed = 6;
     g->gameover = 0;
     map0_setup(g);
     map1_setup(g);
@@ -146,9 +146,11 @@ void InitGame(Game *g)
 void UpdateGame(Game *g)
 {
     update_hero_pos(g);
-    if(g->hero.bullet.active) {
+    if(g->hero.bullet.active){
         update_bullet_pos(&g->hero.bullet);
     }
+
+
     Map *map = &g->maps[g->curr_map];
     for (int i; i < map->num_enemies; i++)
     {
@@ -204,7 +206,7 @@ void DrawGame(Game *g)
     draw_map(g);
 
     DrawRectangleRec(g->hero.pos, g->hero.color);
-    if(g->hero.bullet.exti == 1)
+    if(g->hero.bullet.active)
     DrawRectangleRec(g->hero.bullet.pos, g->hero.bullet.color);
 
     EndDrawing();
@@ -256,18 +258,17 @@ void draw_map(Game *g)
 
 void update_hero_pos(Game *g)
 {
-
     Hero *h = &g->hero;
     Map *m = &g->maps[g->curr_map];
     Bullet *b = &g->hero.bullet;
-
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
     {
         if (h->pos.x > SCREEN_BORDER)
             h->pos.x -= h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.x += h->speed;
-        
+
+        shoot(b, 'L', &h->pos);
         shoot(b, 'L', &h->pos);
     }
     else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
@@ -276,7 +277,8 @@ void update_hero_pos(Game *g)
             h->pos.x += h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.x -= h->speed;
-        
+
+        shoot(b, 'R', &h->pos);
         shoot(b, 'R', &h->pos);
     }
     else if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
@@ -285,7 +287,8 @@ void update_hero_pos(Game *g)
             h->pos.y -= h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.y += h->speed;
-        
+
+        shoot(b, 'U', &h->pos);
         shoot(b, 'U', &h->pos);
     }
     else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
@@ -294,19 +297,19 @@ void update_hero_pos(Game *g)
             h->pos.y += h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.y -= h->speed;
-        
+
+        shoot(b, 'D', &h->pos);
         shoot(b, 'D', &h->pos);
     }
 }
 
 void shoot(Bullet *b, char direction, Rectangle *position) {
      if(IsKeyPressed(KEY_SPACE)){
-         b->pos = (Rectangle){position->x,position->y,STD_SIZE_X,STD_SIZE_Y};
+         b->pos = (Rectangle){position->x,position->y,26,14};
          b->active = 1;
          b->direction = direction;
     }
 }
-
 void update_bullet_pos(Bullet *b){
     if(b->direction == 'L') {
         b->pos.x -= b->speed;
@@ -315,10 +318,10 @@ void update_bullet_pos(Bullet *b){
         b->pos.x += b->speed;
     }
     if(b->direction == 'U') {
-        b->pos.y += b->speed;
+        b->pos.y -= b->speed;
     }
     if(b->direction == 'D') {
-         b->pos.y -= h->speed;
+         b->pos.y += b->speed;
     }
 }
 
