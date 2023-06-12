@@ -146,6 +146,7 @@ void InitGame(Game *g)
 void UpdateGame(Game *g)
 {
     update_hero_pos(g);
+
     if(g->hero.bullet.active){
         update_bullet_pos(&g->hero.bullet);
     }
@@ -159,6 +160,22 @@ void UpdateGame(Game *g)
         update_enemy_pos(g, &map->enemies[i]);
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
             continue;
+
+        if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos)){
+            g->hero.bullet.active =0;
+            map->enemies[i].draw_enemy=0;
+            continue;
+        }
+
+         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos)){
+            map->enemies[i].draw_enemy = 0;
+            if(map->enemies[i].has_key) {
+                map->door_locked = 0;
+            }
+            continue;
+        }
+
+        
 
         if (g->hero.special)
         {
@@ -179,12 +196,6 @@ void UpdateGame(Game *g)
         g->hero.special = 1;
         map->draw_special_item = 0;
     }
-
-  //  for(int i=0; i < map->num_enemies; i++){
-        if (CheckCollisionRecs(g->hero.bullet.pos,map->enemies->pos)){
-                g->hero.bullet.active =0;
-            }
-   // }
     
 
     if (CheckCollisionRecs(g->hero.pos, map->door) && !map->door_locked)
