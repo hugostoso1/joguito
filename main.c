@@ -134,7 +134,7 @@ void InitGame(Game *g)
     g->hero.color = BLACK;
     g->hero.speed = 10;
     g->hero.special = 0;
-    g->hero.bullet.default_pos = (Rectangle){-50,-20,STD_SIZE_X,15};
+    g->hero.bullet.default_pos = (Rectangle){-50,-20,45,10};
     g->hero.bullet.direction = KEY_RIGHT;
     g->hero.bullet.color = PURPLE;
     g->hero.bullet.speed = 25;
@@ -160,35 +160,19 @@ void UpdateGame(Game *g)
         if (!map->enemies[i].draw_enemy)
             continue;
         update_enemy_pos(g, &map->enemies[i]);
-        if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
-            continue;
-            
+        
 
-         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos)){
-            map->enemies[i].draw_enemy = 0;
-            if(map->enemies[i].has_key) {
-                map->door_locked = 0;
-            }
-            continue;
-        }
-
-        if (g->hero.special || CheckCollisionRecs(g->hero.bullet.pos, g->maps->enemies->pos))
+        if (g->hero.special || CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
         {
             map->enemies[i].draw_enemy = 0;
+            g->hero.bullet.active = 0;
             if (map->enemies[i].has_key)
             {
                 map->door_locked = 0;
             }
+        }
+        if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
             continue;
-        }
-
-        if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies[i].pos))
-        {
-                g->hero.bullet.active =0;
-                g->maps->enemies[i].draw_enemy=0;
-                continue;
-        }
-        
         g->gameover = 1;
     }
 
@@ -199,12 +183,6 @@ void UpdateGame(Game *g)
         g->hero.special = 1;
         map->draw_special_item = 0;
     }
-
-  /*  if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies->pos)){
-                g->hero.bullet.active =0;
-                map->enemies->draw_enemy=0;
-            }
-    */
 
     if (CheckCollisionRecs(g->hero.pos, map->door) && !map->door_locked)
     {
@@ -311,7 +289,6 @@ void update_hero_pos(Game *g)
         if (barrier_collision(m, &h->pos))
             h->pos.y += h->speed;
         (b->active == 0) ? b->direction = KEY_UP : b->direction;
-
     }
     else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
     {
@@ -326,8 +303,13 @@ void update_hero_pos(Game *g)
 
 void shoot(Bullet *b, Rectangle *position, Game *g) {
      if(IsKeyPressed(KEY_SPACE) &&  b->active == 0){
-         b->pos = (Rectangle){position->x,position->y,STD_SIZE_X,STD_SIZE_Y};
-         b->active = 1;
+        if(b->direction == KEY_UP || b->direction == KEY_DOWN) {
+            b->pos = (Rectangle){position->x,position->y,15,45};
+        }
+        if(b->direction == KEY_LEFT || b->direction == KEY_RIGHT) {
+            b->pos = (Rectangle){position->x,position->y,45,15};
+        }
+        b->active = 1;
     }else {
         update_bullet_pos(b,g);
     }
