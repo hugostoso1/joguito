@@ -11,6 +11,7 @@
 
 typedef struct Bullet{
     Rectangle pos;
+    Rectangle default_pos;
     Color color;
     int speed;
     int active;
@@ -118,7 +119,9 @@ int main(void)
     return 0;
 }
 //------------------------------------------------------------------------------------
-// Module Functions Definitions (local)
+// Module Functions Definitions (local)//   if(barrier_collision(g->curr_map,&b->pos)){
+   //     b->active = 0;
+    //}
 //------------------------------------------------------------------------------------
 
 // Initialize game variables
@@ -131,7 +134,8 @@ void InitGame(Game *g)
     g->hero.color = BLACK;
     g->hero.speed = 10;
     g->hero.special = 0;
-    g->hero.bullet.pos = (Rectangle){100,20,STD_SIZE_X,STD_SIZE_Y};
+    g->hero.bullet.default_pos = (Rectangle){-50,-20,STD_SIZE_X,15};
+    g->hero.bullet.direction = KEY_RIGHT;
     g->hero.bullet.color = PURPLE;
     g->hero.bullet.speed = 25;
     g->hero.bullet.active = 0;
@@ -289,7 +293,7 @@ void update_hero_pos(Game *g)
             h->pos.x -= h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.x += h->speed;
-        b->direction = KEY_LEFT; 
+        (b->active == 0) ? b->direction = KEY_LEFT: b->direction;
 
     }
     else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
@@ -298,8 +302,7 @@ void update_hero_pos(Game *g)
             h->pos.x += h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.x -= h->speed;
-        b->direction = KEY_RIGHT;
-
+        (b->active == 0) ? b->direction = KEY_RIGHT : b->direction;
     }
     else if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
     {
@@ -307,7 +310,7 @@ void update_hero_pos(Game *g)
             h->pos.y -= h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.y += h->speed;
-        b->direction = KEY_UP;
+        (b->active == 0) ? b->direction = KEY_UP : b->direction;
 
     }
     else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
@@ -316,7 +319,7 @@ void update_hero_pos(Game *g)
             h->pos.y += h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.y -= h->speed;
-        b->direction = KEY_DOWN;
+        (b->active == 0) ? b->direction = KEY_DOWN : b->direction;
 
     }
 }
@@ -330,20 +333,45 @@ void shoot(Bullet *b, Rectangle *position, Game *g) {
     }
 }
 void update_bullet_pos(Bullet *b, Game *g){
- //   if(barrier_collision(g->curr_map,&b->pos)){
-   //     b->active = 0;
-    //}
     if(b->direction == KEY_LEFT) {
-        b->pos.x -= b->speed;
+            b->pos.x -= b->speed;
+        if (!(b->pos.x > SCREEN_BORDER)) {
+            b->active = 0;
+            b->pos = b->default_pos;
+        }
+        if(barrier_collision(&g->maps[g->curr_map],&b->pos)){
+            b->active = 0;
+        }
     }
     if(b->direction == KEY_RIGHT) {
         b->pos.x += b->speed;
+        if (!(b->pos.x + b->pos.width < g->screenWidth - SCREEN_BORDER)){
+            b->active = 0;
+            b->pos = b->default_pos;
+        }
+        if(barrier_collision(&g->maps[g->curr_map],&b->pos)){
+            b->active = 0;
+        }
     }
     if(b->direction == KEY_UP) {
         b->pos.y -= b->speed;
+        if (!(b->pos.y > SCREEN_BORDER)) {
+            b->active = 0;
+            b->pos = b->default_pos;
+        }
+        if(barrier_collision(&g->maps[g->curr_map],&b->pos)){
+            b->active = 0;
+        }
     }
     if(b->direction == KEY_DOWN) {
-         b->pos.y += b->speed;
+        b->pos.y += b->speed;
+        if (!(b->pos.y +b->pos.height < g->screenHeight - SCREEN_BORDER)){
+            b->active = 0;
+            b->pos = b->default_pos;
+        }
+        if(barrier_collision(&g->maps[g->curr_map],&b->pos)){
+            b->active = 0;
+        }
     }
 }
 
