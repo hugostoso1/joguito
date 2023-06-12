@@ -149,7 +149,8 @@ void UpdateGame(Game *g)
     if(g->hero.bullet.active){
         update_bullet_pos(&g->hero.bullet);
     }
-    
+
+
     Map *map = &g->maps[g->curr_map];
     for (int i; i < map->num_enemies; i++)
     {
@@ -158,14 +159,16 @@ void UpdateGame(Game *g)
         update_enemy_pos(g, &map->enemies[i]);
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
             continue;
-        
-        if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos)){
+
+         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos)){
             map->enemies[i].draw_enemy = 0;
             if(map->enemies[i].has_key) {
                 map->door_locked = 0;
             }
             continue;
         }
+
+        
 
         if (g->hero.special)
         {
@@ -186,6 +189,15 @@ void UpdateGame(Game *g)
         g->hero.special = 1;
         map->draw_special_item = 0;
     }
+
+   // for(int i=0; i < map->num_enemies; i++){
+        if (CheckCollisionRecs(g->hero.bullet.pos,map->enemies->pos)){
+                g->hero.bullet.active =0;
+                map->enemies->draw_enemy=0;
+              //  continue;
+            }
+   // }
+    
 
     if (CheckCollisionRecs(g->hero.pos, map->door) && !map->door_locked)
     {
@@ -312,7 +324,7 @@ void update_hero_pos(Game *g)
 
 void shoot(Bullet *b, char direction, Rectangle *position) {
      if(IsKeyPressed(KEY_SPACE)){
-         b->pos = (Rectangle){position->x,position->y,26,14};
+         b->pos = (Rectangle){position->x,position->y,STD_SIZE_X,STD_SIZE_Y};
          b->active = 1;
          b->direction = direction;
     }
@@ -419,7 +431,7 @@ void map0_setup(Game *g)
     {
         g->maps[0].enemies[i].pos = (Rectangle){2 * g->screenWidth / 3, 2 * g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
         g->maps[0].enemies[i].color = BLACK;
-        g->maps[0].enemies[i].speed = 6;
+        g->maps[0].enemies[i].speed = 1;
         g->maps[0].enemies[i].direction = KEY_RIGHT + (rand() % 4);
         g->maps[0].enemies[i].draw_enemy = 1;
         g->maps[0].enemies[i].has_key = 0;
