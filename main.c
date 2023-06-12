@@ -149,8 +149,7 @@ void UpdateGame(Game *g)
     if(g->hero.bullet.active){
         update_bullet_pos(&g->hero.bullet);
     }
-
-
+    
     Map *map = &g->maps[g->curr_map];
     for (int i; i < map->num_enemies; i++)
     {
@@ -159,6 +158,14 @@ void UpdateGame(Game *g)
         update_enemy_pos(g, &map->enemies[i]);
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
             continue;
+        
+        if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos)){
+            map->enemies[i].draw_enemy = 0;
+            if(map->enemies[i].has_key) {
+                map->door_locked = 0;
+            }
+            continue;
+        }
 
         if (g->hero.special)
         {
