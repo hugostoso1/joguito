@@ -14,7 +14,7 @@ typedef struct Bullet{
     Color color;
     int speed;
     int active;
-    char direction;
+    int direction;
 }Bullet;
 
 typedef struct Hero
@@ -79,8 +79,8 @@ void draw_borders(Game *g);
 void draw_map(Game *g);
 void update_enemy_pos(Game *g, Enemy *e);
 void update_hero_pos(Game *g);
-void shoot(Bullet *b, char direction, Rectangle *position);
-void update_bullet_pos(Bullet *b);
+void shoot(Bullet *b, Rectangle *position, Game *g);
+void update_bullet_pos(Bullet *b, Game *g);
 
 int barrier_collision(Map *m, Rectangle *t);
 void map0_setup(Game *g);
@@ -95,7 +95,7 @@ int main(void)
 {
     Game game;
     game.screenWidth = 800;
-    game.screenHeight = 450;
+    game.screenHeight = 480;
 
     InitWindow(game.screenWidth, game.screenHeight, "Aedsinho's quest");
     SetTargetFPS(60);
@@ -147,9 +147,7 @@ void UpdateGame(Game *g)
 {
     update_hero_pos(g);
 
-    if(g->hero.bullet.active){
-        update_bullet_pos(&g->hero.bullet);
-    }
+    shoot(&g->hero.bullet,&g->hero.pos,g);
 
 
     Map *map = &g->maps[g->curr_map];
@@ -180,13 +178,13 @@ void UpdateGame(Game *g)
             continue;
         }
 
-       /* if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies[i].pos))
+        if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies[i].pos))
         {
                 g->hero.bullet.active =0;
                 g->maps->enemies[i].draw_enemy=0;
                 continue;
         }
-        */
+        
         g->gameover = 1;
     }
 
@@ -198,11 +196,11 @@ void UpdateGame(Game *g)
         map->draw_special_item = 0;
     }
 
-    if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies->pos)){
+  /*  if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies->pos)){
                 g->hero.bullet.active =0;
                 map->enemies->draw_enemy=0;
             }
-    
+    */
 
     if (CheckCollisionRecs(g->hero.pos, map->door) && !map->door_locked)
     {
@@ -291,9 +289,8 @@ void update_hero_pos(Game *g)
             h->pos.x -= h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.x += h->speed;
+        b->direction = KEY_LEFT; 
 
-        shoot(b, 'L', &h->pos);
-        shoot(b, 'L', &h->pos);
     }
     else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
     {
@@ -301,9 +298,8 @@ void update_hero_pos(Game *g)
             h->pos.x += h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.x -= h->speed;
+        b->direction = KEY_RIGHT;
 
-        shoot(b, 'R', &h->pos);
-        shoot(b, 'R', &h->pos);
     }
     else if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
     {
@@ -311,9 +307,8 @@ void update_hero_pos(Game *g)
             h->pos.y -= h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.y += h->speed;
+        b->direction = KEY_UP;
 
-        shoot(b, 'U', &h->pos);
-        shoot(b, 'U', &h->pos);
     }
     else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
     {
@@ -321,30 +316,33 @@ void update_hero_pos(Game *g)
             h->pos.y += h->speed;
         if (barrier_collision(m, &h->pos))
             h->pos.y -= h->speed;
+        b->direction = KEY_DOWN;
 
-        shoot(b, 'D', &h->pos);
-        shoot(b, 'D', &h->pos);
     }
 }
 
-void shoot(Bullet *b, char direction, Rectangle *position) {
-     if(IsKeyPressed(KEY_SPACE)){
+void shoot(Bullet *b, Rectangle *position, Game *g) {
+     if(IsKeyPressed(KEY_SPACE) &&  b->active == 0){
          b->pos = (Rectangle){position->x,position->y,STD_SIZE_X,STD_SIZE_Y};
          b->active = 1;
-         b->direction = direction;
+    }else {
+        update_bullet_pos(b,g);
     }
 }
-void update_bullet_pos(Bullet *b){
-    if(b->direction == 'L') {
+void update_bullet_pos(Bullet *b, Game *g){
+ //   if(barrier_collision(g->curr_map,&b->pos)){
+   //     b->active = 0;
+    //}
+    if(b->direction == KEY_LEFT) {
         b->pos.x -= b->speed;
     }
-    if(b->direction == 'R') {
+    if(b->direction == KEY_RIGHT) {
         b->pos.x += b->speed;
     }
-    if(b->direction == 'U') {
+    if(b->direction == KEY_UP) {
         b->pos.y -= b->speed;
     }
-    if(b->direction == 'D') {
+    if(b->direction == KEY_DOWN) {
          b->pos.y += b->speed;
     }
 }
