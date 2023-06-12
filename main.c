@@ -146,6 +146,7 @@ void InitGame(Game *g)
 void UpdateGame(Game *g)
 {
     update_hero_pos(g);
+
     if(g->hero.bullet.active){
         update_bullet_pos(&g->hero.bullet);
     }
@@ -159,6 +160,7 @@ void UpdateGame(Game *g)
         update_enemy_pos(g, &map->enemies[i]);
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
             continue;
+            
 
          if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos)){
             map->enemies[i].draw_enemy = 0;
@@ -168,9 +170,7 @@ void UpdateGame(Game *g)
             continue;
         }
 
-        
-
-        if (g->hero.special)
+        if (g->hero.special || CheckCollisionRecs(g->hero.bullet.pos, g->maps->enemies->pos))
         {
             map->enemies[i].draw_enemy = 0;
             if (map->enemies[i].has_key)
@@ -179,6 +179,14 @@ void UpdateGame(Game *g)
             }
             continue;
         }
+
+       /* if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies[i].pos))
+        {
+                g->hero.bullet.active =0;
+                g->maps->enemies[i].draw_enemy=0;
+                continue;
+        }
+        */
         g->gameover = 1;
     }
 
@@ -190,13 +198,10 @@ void UpdateGame(Game *g)
         map->draw_special_item = 0;
     }
 
-   // for(int i=0; i < map->num_enemies; i++){
-        if (CheckCollisionRecs(g->hero.bullet.pos,map->enemies->pos)){
+    if (CheckCollisionRecs(g->hero.bullet.pos,g->maps->enemies->pos)){
                 g->hero.bullet.active =0;
                 map->enemies->draw_enemy=0;
-              //  continue;
             }
-   // }
     
 
     if (CheckCollisionRecs(g->hero.pos, map->door) && !map->door_locked)
@@ -501,9 +506,9 @@ void map2_setup(Game *g)
 void map3_setup(Game *g){
     g->maps[3].num_barriers = 4;
     g->maps[3].barriers[0] = (Rectangle) {g->screenWidth/6, 0, 2, 0.5 * g->screenHeight};
-    g->maps[3].barriers[1] = (Rectangle) {2*g->screenWidth/6, 0, 2, 0.8 * g->screenHeight};
-    g->maps[3].barriers[2] = (Rectangle) {3*g->screenWidth/6, 0, 2, 0.8 * g->screenHeight};
-    g->maps[3].barriers[3] = (Rectangle) {4*g->screenWidth/6, 0, 2, 0.8 * g->screenHeight};
+    g->maps[3].barriers[1] = (Rectangle) {2*g->screenWidth/6, 0.4 * g->screenHeight, 2, g->screenHeight};
+    g->maps[3].barriers[2] = (Rectangle) {3*g->screenWidth/6, 0, 2, 0.5 * g->screenHeight};
+    g->maps[3].barriers[3] = (Rectangle) {4*g->screenWidth/6, 0.4 * g->screenHeight, 2, g->screenHeight};
     g->maps[3].color = GRAY;
     g->maps[3].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/6, SCREEN_BORDER, 50};
     g->maps[3].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2, 5, 50};
