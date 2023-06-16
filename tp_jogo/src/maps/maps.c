@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include <stdlib.h>
 #include "../game/game.h"
 
 void draw_map(Game *g)
