@@ -16,7 +16,7 @@ int main(void)
     char nickname[50];
     int countNick = 0;
     int select = 1; // 1 normal, 0 hard
-    while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose()) {
+    while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
         DrawText("ESCREVA UM NICKNAME", GetScreenWidth() / 2 - MeasureText("ESCREVA UM NICKNAME", 20) / 2, GetScreenHeight() / 2 - 50, 20, BLACK);
@@ -24,14 +24,14 @@ int main(void)
             DrawText(nickname, GetScreenWidth() / 2 - MeasureText(nickname, 20) / 2, GetScreenHeight()- 150, 20, BLACK);
         }
         EndDrawing();
-        int key = GetCharPressed();
+        int key = GetKeyPressed();
         while (key > 0){
             if ((key >= 32) && (key <= 125) && (countNick < 50)){
                     nickname[countNick] = (char)key;
                     nickname[countNick+1] = '\0';
                     countNick++;
                 }
-            key = GetCharPressed();
+            key = GetKeyPressed();
         }
 
         if (IsKeyPressed(KEY_BACKSPACE)){
@@ -40,8 +40,9 @@ int main(void)
             nickname[countNick] = '\0';
         }
     }
-
-    while(!IsKeyDown(KEY_LEFT) && !WindowShouldClose()) {
+    
+    
+    while(!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
         DrawText("ESCOLHA UM MODO DE JOGO:", GetScreenWidth() / 2 - MeasureText("ESCOLHA UM MODO DE JOGO:", 20) / 2, GetScreenHeight() / 2 - 75, 20, BLACK);
@@ -59,6 +60,7 @@ int main(void)
             DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 25) / 2, GetScreenHeight() - 150, 25, WHITE);
         }
         EndDrawing();
+        if(IsKeyPressed(KEY_ENTER)) break;
     }
 
     while (!WindowShouldClose()) // Detect window close button or ESC key
