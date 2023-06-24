@@ -51,7 +51,7 @@ void map0_setup(Game *g)
         g->maps[0].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[0].enemies[i].enemyBullet.active = 0;
         g->maps[0].enemies[i].enemyBullet.color = RED;
-        g->maps[0].enemies[i].enemyBullet.speed = 25;
+        g->maps[0].enemies[i].enemyBullet.speed = 2;
         g->maps[0].enemies[i].enemyBullet.direction = KEY_LEFT;
     }
     g->maps[0].enemies[0].has_key = 1;
@@ -84,7 +84,7 @@ void map1_setup(Game *g)
         g->maps[1].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[1].enemies[i].enemyBullet.active = 0;
         g->maps[1].enemies[i].enemyBullet.color = RED;
-        g->maps[1].enemies[i].enemyBullet.speed = 25;
+        g->maps[1].enemies[i].enemyBullet.speed = 10;
         g->maps[1].enemies[i].enemyBullet.direction = KEY_LEFT;
     }
     g->maps[1].enemies[0].has_key = 1;
