@@ -5,19 +5,28 @@
 void update_enemy_pos(Game *g, Enemy *e)
 {
     Map *m = &g->maps[g->curr_map];
-    int x = g->hero.pos.x - e->pos.x;
-    int y = g->hero.pos.y - e->pos.y;
+    if(e->enemyBullet.active == 0){
+        int x = g->hero.pos.x - e->pos.x;
+        int y = g->hero.pos.y - e->pos.y;
     
-    if(x>=-10 && x<=10){
-        e->enemyBullet.direction = (y>0) ? KEY_UP : KEY_DOWN;   
-        e->enemyBullet.pos = (Rectangle){e->enemyBullet.pos.x,e->enemyBullet.pos.y,15,45};
-        shootEnemy(&e->enemyBullet,&e->pos,g);     
+        if(x>=-10 && x<=10){
+            e->enemyBullet.direction = (y>0) ? KEY_DOWN : KEY_UP;   
+            e->enemyBullet.pos = (Rectangle){e->pos.x, e->pos.y, 15, 45};
+            e->enemyBullet.active = 1;
+        }
+        if(y>=-10 && y<=10){
+            e->enemyBullet.direction = (x>0) ? KEY_RIGHT : KEY_LEFT;  
+            e->enemyBullet.pos = (Rectangle){e->pos.x, e->pos.y, 45, 15};
+            e->enemyBullet.active = 1;
+        }
     }
-    if(y>=-10 && y<=10){
-        e->enemyBullet.direction = (x>0) ? KEY_RIGHT : KEY_LEFT;  
-        e->enemyBullet.pos = (Rectangle){e->enemyBullet.pos.x,e->enemyBullet.pos.y,45,15};
-        shootEnemy(&e->enemyBullet,&e->pos,g); 
+    
+
+    if(e->enemyBullet.active == 1){
+        update_bullet_pos(&e->enemyBullet, g);
     }
+
+    
 
     if (e->direction == KEY_LEFT)
     {
