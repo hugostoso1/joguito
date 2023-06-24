@@ -19,6 +19,7 @@ typedef struct Enemy
     int direction;
     int draw_enemy;
     int has_key;
+    Bullet enemyBullet;
 } Enemy;
 
 typedef struct Hero
@@ -70,6 +71,8 @@ void update_enemy_pos(Game *g, Enemy *e);
 void update_hero_pos(Game *g);
 void shoot(Bullet *b, Rectangle *position, Game *g);
 void update_bullet_pos(Bullet *b, Game *g);
+void shootEnemy(Bullet *b, Rectangle *position, Game *g);
+void update_enemyBullet_pos(Bullet *b, Game *g);
 void draw_map(Game *g);
 void map0_setup(Game *g);
 void map1_setup(Game *g);
