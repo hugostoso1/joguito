@@ -32,14 +32,18 @@ void UpdateGame(Game *g)
     Map *map = &g->maps[g->curr_map];
     for (int i; i < map->num_enemies; i++)
     {
-        if (!map->enemies[i].draw_enemy)
+        if (!map->enemies[i].draw_enemy){
+            map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
+            map->enemies[i].enemyBullet.active = 0;
             continue;
+        }
+
         update_enemy_pos(g, &map->enemies[i]);
         shootEnemy(&map->enemies[i].enemyBullet, &map->enemies[i].pos, g); 
 
         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
         {
-            map->enemies[i].draw_enemy = 0;
+            map->enemies[i].draw_enemy = 0;            
             g->hero.bullet.active = 0;
             g->hero.bullet.pos = g->hero.bullet.default_pos;
             if (map->enemies[i].has_key)
