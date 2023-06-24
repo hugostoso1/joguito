@@ -1,4 +1,4 @@
-#include "raylib.h"
+#include "../raylib.h"
 #include "./game.h"
 
 void InitGame(Game *g)
@@ -98,6 +98,11 @@ void DrawGame(Game *g)
     DrawRectangleRec(g->hero.pos, g->hero.color);
     if(g->hero.bullet.active)
     DrawRectangleRec(g->hero.bullet.pos, g->hero.bullet.color);
+    for(int i = 0; i<g->maps[g->curr_map].num_enemies; i++){
+        if(g->maps[g->curr_map].enemies[i].enemyBullet.active){
+            DrawRectangleRec(g->maps[g->curr_map].enemies[i].pos, g->maps[g->curr_map].enemies[i].enemyBullet.color);
+        }
+    }
 
     EndDrawing();
 }
