@@ -1,10 +1,23 @@
-#include "raylib.h"
+#include "../raylib.h"
 #include <stdlib.h>
 #include "../game/game.h"
 
 void update_enemy_pos(Game *g, Enemy *e)
 {
     Map *m = &g->maps[g->curr_map];
+    int x = g->hero.pos.x - e->pos.x;
+    int y = g->hero.pos.y - e->pos.y;
+    
+    if(x==0){
+        e->enemyBullet.direction = (y>0) ? KEY_UP : KEY_DOWN;   
+        e->enemyBullet.pos = (Rectangle){e->enemyBullet.pos.x,e->enemyBullet.pos.y,15,45};
+        shootEnemy(&e->enemyBullet,&e->pos,g);     
+    }
+    if(y==0){
+        e->enemyBullet.direction = (x>0) ? KEY_RIGHT : KEY_LEFT;  
+        e->enemyBullet.pos = (Rectangle){e->enemyBullet.pos.x,e->enemyBullet.pos.y,45,15};
+        shootEnemy(&e->enemyBullet,&e->pos,g); 
+    }
 
     if (e->direction == KEY_LEFT)
     {
