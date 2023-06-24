@@ -5,7 +5,7 @@
 void update_enemy_pos(Game *g, Enemy *e)
 {
     Map *m = &g->maps[g->curr_map];
-    if(e->enemyBullet.active == 0){
+    if(!e->enemyBullet.active){
         int x = g->hero.pos.x - e->pos.x;
         int y = g->hero.pos.y - e->pos.y;
     
@@ -22,8 +22,13 @@ void update_enemy_pos(Game *g, Enemy *e)
     }
     
 
-    if(e->enemyBullet.active == 1){
+    if(e->enemyBullet.active){
         update_bullet_pos(&e->enemyBullet, g);
+    }
+
+    if(e->draw_enemy == 0){
+        e->enemyBullet.pos = e->enemyBullet.default_pos;
+        e->enemyBullet.active = 0;
     }
 
     
