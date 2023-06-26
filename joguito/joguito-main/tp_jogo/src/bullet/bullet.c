@@ -127,7 +127,7 @@ void update_bullet_pos(Hero *h, Game *g){
 }
 
 void update_enemyBullet_pos(Enemy *e, Game *g){
-    Bullet *b = &e->enemyBullet1;
+    Bullet *b = &e->enemyBullet;
     Bullet *b2 = &e->enemyBullet2;
     if(b->active){
         if(b->direction == KEY_LEFT) {
