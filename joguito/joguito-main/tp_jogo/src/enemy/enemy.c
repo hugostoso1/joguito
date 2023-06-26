@@ -8,19 +8,19 @@ void update_enemy_pos(Game *g, Enemy *e)
 
     update_enemyBullet_pos(e, g);
 
-    if(!e->enemyBullet1.active){
+    if(!e->enemyBullet.active){
         int x = g->hero.pos.x - e->pos.x;
         int y = g->hero.pos.y - e->pos.y;
     
         if(x>=-10 && x<=10){
-            e->enemyBullet1.direction = (y>0) ? KEY_DOWN : KEY_UP;   
-            e->enemyBullet1.pos = (Rectangle){e->pos.x, e->pos.y, 15, 45};
-            e->enemyBullet1.active = 1;
+            e->enemyBullet.direction = (y>0) ? KEY_DOWN : KEY_UP;   
+            e->enemyBullet.pos = (Rectangle){e->pos.x, e->pos.y, 15, 45};
+            e->enemyBullet.active = 1;
         }
         if(y>=-10 && y<=10){
-            e->enemyBullet1.direction = (x>0) ? KEY_RIGHT : KEY_LEFT;  
-            e->enemyBullet1.pos = (Rectangle){e->pos.x, e->pos.y, 45, 15};
-            e->enemyBullet1.active = 1;
+            e->enemyBullet.direction = (x>0) ? KEY_RIGHT : KEY_LEFT;  
+            e->enemyBullet.pos = (Rectangle){e->pos.x, e->pos.y, 45, 15};
+            e->enemyBullet.active = 1;
         }
     }
     else if(!e->enemyBullet2.active  &&  rand() % 50 == 1){
@@ -42,8 +42,8 @@ void update_enemy_pos(Game *g, Enemy *e)
     
 
     if(e->draw_enemy == 0){
-        e->enemyBullet1.pos = e->enemyBullet1.default_pos;
-        e->enemyBullet1.active = 0;
+        e->enemyBullet.pos = e->enemyBullet.default_pos;
+        e->enemyBullet.active = 0;
         e->enemyBullet2.pos = e->enemyBullet2.default_pos;
         e->enemyBullet2.active = 0;
     }
