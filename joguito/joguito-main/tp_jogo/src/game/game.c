@@ -21,6 +21,7 @@ void InitGame(Game *g)
     g->hero.bullet2.speed = 15;
     g->hero.bullet2.active = 0;
     g->gameover = 0;
+    g->score = 0;
     map0_setup(g);
     map1_setup(g);
     map2_setup(g);
