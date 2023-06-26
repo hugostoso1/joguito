@@ -40,8 +40,8 @@ void UpdateGame(Game *g)
     for (int i=0; i < map->num_enemies; i++)
     {
         if (!map->enemies[i].draw_enemy){
-            map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
-            map->enemies[i].enemyBullet.active = 0;
+            map->enemies[i].enemyBullet1.pos = map->enemies[i].enemyBullet1.default_pos;
+            map->enemies[i].enemyBullet1.active = 0;
             map->enemies[i].enemyBullet2.pos = map->enemies[i].enemyBullet2.default_pos;
             map->enemies[i].enemyBullet2.active = 0;
             continue;
@@ -132,8 +132,8 @@ void DrawGame(Game *g)
     DrawRectangleRec(g->hero.bullet2.pos, g->hero.bullet2.color);
     
     for(int i = 0; i<g->maps[g->curr_map].num_enemies; i++){
-        if(g->maps[g->curr_map].enemies[i].enemyBullet.active){
-            DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet.pos, g->maps[g->curr_map].enemies[i].enemyBullet.color);
+        if(g->maps[g->curr_map].enemies[i].enemyBullet1.active){
+            DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet1.pos, g->maps[g->curr_map].enemies[i].enemyBullet1.color);
         }
         if(g->maps[g->curr_map].enemies[i].enemyBullet2.active){
             DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet2.pos, g->maps[g->curr_map].enemies[i].enemyBullet2.color);
