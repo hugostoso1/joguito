@@ -1,4 +1,4 @@
-#include "raylib.h"
+#include "../raylib.h"
 #include "../game/game.h"
 
 void draw_borders(Game *g)

@@ -13,9 +13,15 @@ void InitGame(Game *g)
     g->hero.bullet.default_pos = (Rectangle){5500,5500,45,10};
     g->hero.bullet.direction = KEY_RIGHT;
     g->hero.bullet.color = PURPLE;
-    g->hero.bullet.speed = 25;
+    g->hero.bullet.speed = 15;
     g->hero.bullet.active = 0;
+    g->hero.bullet2.default_pos = (Rectangle){5500,5500,45,10};
+    g->hero.bullet2.direction = KEY_RIGHT;
+    g->hero.bullet2.color = PURPLE;
+    g->hero.bullet2.speed = 15;
+    g->hero.bullet2.active = 0;
     g->gameover = 0;
+    g->score = 0;
     map0_setup(g);
     map1_setup(g);
     map2_setup(g);
@@ -26,26 +32,43 @@ void UpdateGame(Game *g)
 {
     update_hero_pos(g);
 
-    shoot(&g->hero.bullet,&g->hero.pos,g);
+    shoot(&g->hero, &g->hero.pos, g);
+   
 
 
     Map *map = &g->maps[g->curr_map];
-    for (int i; i < map->num_enemies; i++)
+    for (int i=0; i < map->num_enemies; i++)
     {
         if (!map->enemies[i].draw_enemy){
             map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
             map->enemies[i].enemyBullet.active = 0;
+            map->enemies[i].enemyBullet2.pos = map->enemies[i].enemyBullet2.default_pos;
+            map->enemies[i].enemyBullet2.active = 0;
             continue;
         }
 
         update_enemy_pos(g, &map->enemies[i]);
-        shootEnemy(&map->enemies[i].enemyBullet, &map->enemies[i].pos, g); 
+        
+
+
+       // shootEnemy(&map->enemies[i].enemyBullet, &map->enemies[i].pos, g); 
 
         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
         {
             map->enemies[i].draw_enemy = 0;            
             g->hero.bullet.active = 0;
             g->hero.bullet.pos = g->hero.bullet.default_pos;
+            if (map->enemies[i].has_key)
+            {
+                map->door_locked = 0;
+            }
+        }
+
+        if (CheckCollisionRecs(g->hero.bullet2.pos, map->enemies[i].pos))
+        {
+            map->enemies[i].draw_enemy = 0;            
+            g->hero.bullet2.active = 0;
+            g->hero.bullet2.pos = g->hero.bullet2.default_pos;
             if (map->enemies[i].has_key)
             {
                 map->door_locked = 0;
@@ -101,12 +124,19 @@ void DrawGame(Game *g)
     draw_map(g);
 
     DrawRectangleRec(g->hero.pos, g->hero.color);
+    
     if(g->hero.bullet.active)
     DrawRectangleRec(g->hero.bullet.pos, g->hero.bullet.color);
+
+    if(g->hero.bullet2.active)
+    DrawRectangleRec(g->hero.bullet2.pos, g->hero.bullet2.color);
     
     for(int i = 0; i<g->maps[g->curr_map].num_enemies; i++){
         if(g->maps[g->curr_map].enemies[i].enemyBullet.active){
             DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet.pos, g->maps[g->curr_map].enemies[i].enemyBullet.color);
+        }
+        if(g->maps[g->curr_map].enemies[i].enemyBullet2.active){
+            DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet2.pos, g->maps[g->curr_map].enemies[i].enemyBullet2.color);
         }
     }
 

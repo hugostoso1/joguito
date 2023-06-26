@@ -51,8 +51,13 @@ void map0_setup(Game *g)
         g->maps[0].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[0].enemies[i].enemyBullet.active = 0;
         g->maps[0].enemies[i].enemyBullet.color = RED;
-        g->maps[0].enemies[i].enemyBullet.speed = 2;
+        g->maps[0].enemies[i].enemyBullet.speed = 10;
         g->maps[0].enemies[i].enemyBullet.direction = KEY_LEFT;
+        g->maps[0].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
+        g->maps[0].enemies[i].enemyBullet2.active = 0;
+        g->maps[0].enemies[i].enemyBullet2.color = RED;
+        g->maps[0].enemies[i].enemyBullet2.speed = 10;
+        g->maps[0].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
     g->maps[0].enemies[0].has_key = 1;
     g->maps[0].special_item = (Rectangle){2 * g->screenWidth / 3, 20, 15, 15};
@@ -84,7 +89,7 @@ void map1_setup(Game *g)
         g->maps[1].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[1].enemies[i].enemyBullet.active = 0;
         g->maps[1].enemies[i].enemyBullet.color = RED;
-        g->maps[1].enemies[i].enemyBullet.speed = 10;
+        g->maps[1].enemies[i].enemyBullet.speed = 15;
         g->maps[1].enemies[i].enemyBullet.direction = KEY_LEFT;
     }
     g->maps[1].enemies[0].has_key = 1;
@@ -117,7 +122,7 @@ void map2_setup(Game *g)
         g->maps[2].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[2].enemies[i].enemyBullet.active = 0;
         g->maps[2].enemies[i].enemyBullet.color = RED;
-        g->maps[2].enemies[i].enemyBullet.speed = 25;
+        g->maps[2].enemies[i].enemyBullet.speed = 15;
         g->maps[2].enemies[i].enemyBullet.direction = KEY_LEFT;
     }
     g->maps[2].enemies[0].has_key = 1;
