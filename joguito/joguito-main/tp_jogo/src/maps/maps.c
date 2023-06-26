@@ -164,3 +164,28 @@ void map3_setup(Game *g){
     g->maps[3].prev_map = 2;
     g->maps[3].next_map = 4;
 }
+
+void resetMap(Game *g){
+    switch(g->curr_map){
+                case 0:
+                    g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
+                    map0_setup(g);
+                    break;
+                
+                case 1:
+                    g->hero.pos = (Rectangle) {SCREEN_BORDER, g->screenHeight/2, STD_SIZE_X, STD_SIZE_Y};
+                    map1_setup(g);
+                    break;
+                
+                case 2:
+                    g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
+                    map2_setup(g);
+                    break;
+
+                case 3:
+                    g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
+                    map3_setup(g);
+                    break;               
+
+            }
+}
