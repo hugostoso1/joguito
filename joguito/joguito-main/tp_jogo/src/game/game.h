@@ -19,7 +19,7 @@ typedef struct Enemy
     int direction;
     int draw_enemy;
     int has_key;
-    Bullet enemyBullet;
+    Bullet enemyBullet1;
     Bullet enemyBullet2;
 } Enemy;
 
