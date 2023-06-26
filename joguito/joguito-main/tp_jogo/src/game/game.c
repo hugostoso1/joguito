@@ -41,11 +41,16 @@ void UpdateGame(Game *g)
         if (!map->enemies[i].draw_enemy){
             map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
             map->enemies[i].enemyBullet.active = 0;
+            map->enemies[i].enemyBullet2.pos = map->enemies[i].enemyBullet2.default_pos;
+            map->enemies[i].enemyBullet2.active = 0;
             continue;
         }
 
         update_enemy_pos(g, &map->enemies[i]);
-        shootEnemy(&map->enemies[i].enemyBullet, &map->enemies[i].pos, g); 
+        
+
+
+       // shootEnemy(&map->enemies[i].enemyBullet, &map->enemies[i].pos, g); 
 
         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
         {
@@ -128,6 +133,9 @@ void DrawGame(Game *g)
     for(int i = 0; i<g->maps[g->curr_map].num_enemies; i++){
         if(g->maps[g->curr_map].enemies[i].enemyBullet.active){
             DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet.pos, g->maps[g->curr_map].enemies[i].enemyBullet.color);
+        }
+        if(g->maps[g->curr_map].enemies[i].enemyBullet2.active){
+            DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet2.pos, g->maps[g->curr_map].enemies[i].enemyBullet2.color);
         }
     }
 

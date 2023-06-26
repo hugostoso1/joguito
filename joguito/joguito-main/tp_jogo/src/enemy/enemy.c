@@ -5,6 +5,9 @@
 void update_enemy_pos(Game *g, Enemy *e)
 {
     Map *m = &g->maps[g->curr_map];
+
+    update_enemyBullet_pos(e, g);
+
     if(!e->enemyBullet.active){
         int x = g->hero.pos.x - e->pos.x;
         int y = g->hero.pos.y - e->pos.y;
@@ -20,15 +23,29 @@ void update_enemy_pos(Game *g, Enemy *e)
             e->enemyBullet.active = 1;
         }
     }
-    
+    else if(!e->enemyBullet2.active){
 
-    else if(e->enemyBullet.active){
-        update_enemyBullet_pos(&e->enemyBullet, g);
+        int xx = g->hero.pos.x - e->pos.x;
+        int yy = g->hero.pos.y - e->pos.y;
+    
+        if(xx>=-10 && xx<=10){
+            e->enemyBullet2.direction = (yy>0) ? KEY_DOWN : KEY_UP;   
+            e->enemyBullet2.pos = (Rectangle){e->pos.x, e->pos.y, 15, 45};
+            e->enemyBullet2.active = 1;
+        }
+        if(yy>=-10 && yy<=10){
+            e->enemyBullet2.direction = (xx>0) ? KEY_RIGHT : KEY_LEFT;  
+            e->enemyBullet2.pos = (Rectangle){e->pos.x, e->pos.y, 45, 15};
+            e->enemyBullet2.active = 1;
+        }
     }
+    
 
     if(e->draw_enemy == 0){
         e->enemyBullet.pos = e->enemyBullet.default_pos;
         e->enemyBullet.active = 0;
+        e->enemyBullet2.pos = e->enemyBullet2.default_pos;
+        e->enemyBullet2.active = 0;
     }
 
     

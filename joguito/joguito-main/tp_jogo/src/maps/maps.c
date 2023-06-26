@@ -53,6 +53,11 @@ void map0_setup(Game *g)
         g->maps[0].enemies[i].enemyBullet.color = RED;
         g->maps[0].enemies[i].enemyBullet.speed = 3;
         g->maps[0].enemies[i].enemyBullet.direction = KEY_LEFT;
+        g->maps[0].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
+        g->maps[0].enemies[i].enemyBullet2.active = 0;
+        g->maps[0].enemies[i].enemyBullet2.color = WHITE;
+        g->maps[0].enemies[i].enemyBullet2.speed = 10;
+        g->maps[0].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
     g->maps[0].enemies[0].has_key = 1;
     g->maps[0].special_item = (Rectangle){2 * g->screenWidth / 3, 20, 15, 15};
