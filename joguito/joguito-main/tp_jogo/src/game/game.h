@@ -19,7 +19,7 @@ typedef struct Enemy
     int direction;
     int draw_enemy;
     int has_key;
-    Bullet enemyBullet1;
+    Bullet enemyBullet;
     Bullet enemyBullet2;
 } Enemy;
 
@@ -58,6 +58,7 @@ typedef struct Game
     int screenWidth;
     int screenHeight;
     int gameover;
+    int score;
 } Game;
 
 //------------------------------------------------------------------------------------
