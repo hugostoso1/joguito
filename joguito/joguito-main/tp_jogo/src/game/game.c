@@ -50,9 +50,6 @@ void UpdateGame(Game *g)
         update_enemy_pos(g, &map->enemies[i]);
         
 
-
-       // shootEnemy(&map->enemies[i].enemyBullet, &map->enemies[i].pos, g); 
-
         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
         {
             map->enemies[i].draw_enemy = 0;            
@@ -75,8 +72,19 @@ void UpdateGame(Game *g)
             }
         }
 
+        if (CheckCollisionRecs(map->enemies[i].enemyBullet.pos, g->hero.pos)){
+            if(!g->hero.special)
+            resetMap(g);
+        }
+
+        if (CheckCollisionRecs(map->enemies[i].enemyBullet2.pos, g->hero.pos)){
+            if(!g->hero.special)
+            resetMap(g);
+        }
+
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
             continue;
+        
 
         if (g->hero.special)
         {
@@ -87,8 +95,9 @@ void UpdateGame(Game *g)
             }
             continue;
         }
+        
 
-        g->gameover = 1;
+        resetMap(g);
     }
 
     if (CheckCollisionRecs(g->hero.pos, map->special_item) && map->draw_special_item)
