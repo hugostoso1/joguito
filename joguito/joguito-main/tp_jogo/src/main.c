@@ -69,12 +69,19 @@ int main(void)
         if (game.gameover)
             break;
     }
+
+    FILE *p = fopen("nickname.txt", "a");
+    fprintf(p, "%s--%d\n", nickname, game.score);
+
+    fclose(p);
+
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 20) / 2, GetScreenHeight() / 2 - 50, 20, BLACK);
         EndDrawing();
+
     }
     return 0;
 }
