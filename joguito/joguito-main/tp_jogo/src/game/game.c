@@ -34,8 +34,6 @@ void UpdateGame(Game *g)
 
     shoot(&g->hero, &g->hero.pos, g);
    
-
-
     Map *map = &g->maps[g->curr_map];
     for (int i=0; i < map->num_enemies; i++)
     {
@@ -77,7 +75,7 @@ void UpdateGame(Game *g)
             resetMap(g);
         }
 
-        if (CheckCollisionRecs(map->enemies[i].enemyBullet2.pos, g->hero.pos)){
+        if (CheckCollisionRecs(map->enemies[i].enemyBullet2.pos, g->hero.pos) && (g->mode == 'H')){
             if(!g->hero.special)
             resetMap(g);
         }

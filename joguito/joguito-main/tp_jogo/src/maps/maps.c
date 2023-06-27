@@ -56,7 +56,7 @@ void map0_setup(Game *g)
         g->maps[0].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
         g->maps[0].enemies[i].enemyBullet2.active = 0;
         g->maps[0].enemies[i].enemyBullet2.color = RED;
-        g->maps[0].enemies[i].enemyBullet2.speed = 10;
+        g->maps[0].enemies[i].enemyBullet2.speed = 7;
         g->maps[0].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
     g->maps[0].enemies[0].has_key = 1;
@@ -89,8 +89,13 @@ void map1_setup(Game *g)
         g->maps[1].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[1].enemies[i].enemyBullet.active = 0;
         g->maps[1].enemies[i].enemyBullet.color = RED;
-        g->maps[1].enemies[i].enemyBullet.speed = 15;
+        g->maps[1].enemies[i].enemyBullet.speed = 7;
         g->maps[1].enemies[i].enemyBullet.direction = KEY_LEFT;
+        g->maps[1].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
+        g->maps[1].enemies[i].enemyBullet2.active = 0;
+        g->maps[1].enemies[i].enemyBullet2.color = RED;
+        g->maps[1].enemies[i].enemyBullet2.speed = 7;
+        g->maps[1].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
     g->maps[1].enemies[0].has_key = 1;
     g->maps[1].special_item = (Rectangle){4 * g->screenWidth / 5, 20, 15, 15};
@@ -122,8 +127,13 @@ void map2_setup(Game *g)
         g->maps[2].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[2].enemies[i].enemyBullet.active = 0;
         g->maps[2].enemies[i].enemyBullet.color = RED;
-        g->maps[2].enemies[i].enemyBullet.speed = 15;
+        g->maps[2].enemies[i].enemyBullet.speed = 7;
         g->maps[2].enemies[i].enemyBullet.direction = KEY_LEFT;
+        g->maps[2].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
+        g->maps[2].enemies[i].enemyBullet2.active = 0;
+        g->maps[2].enemies[i].enemyBullet2.color = RED;
+        g->maps[2].enemies[i].enemyBullet2.speed = 7;
+        g->maps[2].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
     g->maps[2].enemies[0].has_key = 1;
     g->maps[2].special_item = (Rectangle){4 * g->screenWidth / 5, 20, 15, 15};
@@ -155,8 +165,13 @@ void map3_setup(Game *g){
         g->maps[3].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
         g->maps[3].enemies[i].enemyBullet.active = 0;
         g->maps[3].enemies[i].enemyBullet.color = RED;
-        g->maps[3].enemies[i].enemyBullet.speed = 25;
+        g->maps[3].enemies[i].enemyBullet.speed = 7;
         g->maps[3].enemies[i].enemyBullet.direction = KEY_LEFT;
+        g->maps[3].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
+        g->maps[3].enemies[i].enemyBullet2.active = 0;
+        g->maps[3].enemies[i].enemyBullet2.color = RED;
+        g->maps[3].enemies[i].enemyBullet2.speed = 7;
+        g->maps[3].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
     g->maps[3].enemies[0].has_key = 1;
     g->maps[3].special_item = (Rectangle) {4*g->screenWidth/5, 20, 15, 15};
@@ -173,17 +188,17 @@ void resetMap(Game *g){
                     break;
                 
                 case 1:
-                    g->hero.pos = (Rectangle) {SCREEN_BORDER, g->screenHeight/2, STD_SIZE_X, STD_SIZE_Y};
+                    g->hero.pos = (Rectangle){STD_SIZE_X, g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
                     map1_setup(g);
                     break;
                 
                 case 2:
-                    g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
+                    g->hero.pos = (Rectangle){STD_SIZE_X, g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
                     map2_setup(g);
                     break;
 
                 case 3:
-                    g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
+                    g->hero.pos = (Rectangle){STD_SIZE_X, g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
                     map3_setup(g);
                     break;               
 

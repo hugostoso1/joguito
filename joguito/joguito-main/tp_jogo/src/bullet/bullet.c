@@ -15,7 +15,7 @@ void shoot(Hero *b, Rectangle *position, Game *g) {
         }
         b->bullet.active = 1;
     }
-    else if(IsKeyPressed(KEY_SPACE) &&  b->bullet2.active == 0){
+    else if(IsKeyPressed(KEY_SPACE) &&  b->bullet2.active == 0 && (g->mode == 'N')){
         if(b->bullet2.direction == KEY_UP || b->bullet2.direction == KEY_DOWN) {
             b->bullet2.pos = (Rectangle){position->x,position->y,15,45};
         }

@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "./game/game.h"
 
 int main(void)
@@ -63,6 +64,9 @@ int main(void)
         if(IsKeyPressed(KEY_ENTER)) break;
     }
 
+    game.mode = (select) ? 'N' : 'H';
+    game.time = clock();
+
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         UpdateDrawFrame(&game);
@@ -70,9 +74,11 @@ int main(void)
             break;
     }
 
-    FILE *p = fopen("nickname.txt", "a");
-    fprintf(p, "%s--%d\n", nickname, game.score);
+    game.time = clock() - game.time; // Números de clock gastos do processador
+    game.score = (int)game.time/(CLOCKS_PER_SEC/1000);
 
+    FILE *p = fopen("pontuacoes.txt", "a");
+    fprintf(p, "%s--%d\n", nickname, game.score);
     fclose(p);
 
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())

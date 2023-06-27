@@ -1,3 +1,4 @@
+#include <time.h>
 #define STD_SIZE_X 30
 #define STD_SIZE_Y 30
 #define SCREEN_BORDER 4
@@ -59,6 +60,8 @@ typedef struct Game
     int screenHeight;
     int gameover;
     int score;
+    char mode;
+    clock_t time;
 } Game;
 
 //------------------------------------------------------------------------------------
