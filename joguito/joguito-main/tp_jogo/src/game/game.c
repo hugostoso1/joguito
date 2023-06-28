@@ -71,13 +71,17 @@ void UpdateGame(Game *g)
         }
 
         if (CheckCollisionRecs(map->enemies[i].enemyBullet.pos, g->hero.pos)){
-            if(!g->hero.special)
-            resetMap(g);
+            if(!g->hero.special) {
+                map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
+                resetMap(g);
+            }
         }
 
         if (CheckCollisionRecs(map->enemies[i].enemyBullet2.pos, g->hero.pos) && (g->mode == 'H')){
-            if(!g->hero.special)
-            resetMap(g);
+            if(!g->hero.special) {
+                map->enemies[i].enemyBullet2.pos = map->enemies[i].enemyBullet2.default_pos;
+                resetMap(g);
+            }
         }
 
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
@@ -94,7 +98,7 @@ void UpdateGame(Game *g)
             continue;
         }
         
-
+        printf("colidiu\n");
         resetMap(g);
     }
 
