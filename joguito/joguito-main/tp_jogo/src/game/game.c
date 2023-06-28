@@ -70,6 +70,12 @@ void UpdateGame(Game *g)
             }
         }
 
+        bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet);
+        bulletCollison(&map->enemies[i].enemyBullet2, &g->hero.bullet);
+        bulletCollison(&map->enemies[i].enemyBullet2, &g->hero.bullet2);      
+        
+
+
         if (CheckCollisionRecs(map->enemies[i].enemyBullet.pos, g->hero.pos)){
             if(!g->hero.special) {
                 map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
