@@ -79,6 +79,7 @@ void shoot(Hero *b, Rectangle *position, Game *g);
 void update_bullet_pos(Hero *b, Game *g);
 void shootEnemy(Bullet *b, Rectangle *position, Game *g);
 void update_enemyBullet_pos(Enemy *e, Game *g);
+void bulletCollison(Bullet *b1, Bullet *b2);
 void draw_map(Game *g);
 void resetMap(Game *g);
 void map0_setup(Game *g);
