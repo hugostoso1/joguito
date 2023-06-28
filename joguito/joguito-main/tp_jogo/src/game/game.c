@@ -97,8 +97,7 @@ void UpdateGame(Game *g)
             }
             continue;
         }
-        
-        printf("colidiu\n");
+
         resetMap(g);
     }
 
