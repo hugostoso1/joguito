@@ -230,3 +230,12 @@ void shootEnemy(Bullet *b, Rectangle *position, Game *g) {
         update_enemyBullet_pos(g->maps->enemies,g);
     }
 }
+
+void bulletCollison(Bullet *b1, Bullet *b2){
+    if(CheckCollisionRecs(b1->pos, b2->pos)){
+        b1->active = 0;
+        b2->active = 0;
+        b1->pos = b1->default_pos;
+        b2->pos = b2->default_pos;
+    }
+}
