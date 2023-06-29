@@ -73,6 +73,7 @@ void UpdateGame(Game *g)
         bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet);
         bulletCollison(&map->enemies[i].enemyBullet2, &g->hero.bullet);
         bulletCollison(&map->enemies[i].enemyBullet2, &g->hero.bullet2);      
+        bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet2);  
         
 
 
