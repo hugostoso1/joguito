@@ -2,15 +2,15 @@ CFLAGS=-Llib -Iinclude -no-pie
 LIBS=-l:libraylib.a -pthread -ldl -lm -lxcb -lX11
 
 # Compilar laboratório
-build: main.c ./barrier/barrier.o ./bullet/bullet.o ./enemy/enemy.o ./game/game.o ./hero/hero.o ./maps/maps.o
-	gcc main.c ./barrier/barrier.o ./bullet/bullet.o ./maps/maps.o ./game/game.o ./hero/hero.o ./enemy/enemy.o -o jogo -lraylib 
+build: main.c ./barrier/barrier.o ./bullet/bullet.o ./enemy/enemy.o ./game/game.o ./hero/hero.o ./maps/maps.o ./boss/boss.o
+	gcc main.c ./barrier/barrier.o ./bullet/bullet.o ./maps/maps.o ./boss/boss.o ./game/game.o ./hero/hero.o ./enemy/enemy.o -o jogo -lraylib 
 
 
 # Quando quiser adicionar um módulo novo, coloque
 # sempre $(CFLAGS) e $(LIBS) no final!
 
-jogo: main.c ./barrier/barrier.o ./bullet/bullet.o ./enemy/enemy.o ./game/game.o ./hero/hero.o ./maps/maps.o
-	gcc main.c ./barrier/barrier.o ./bullet/bullet.o ./maps/maps.o ./game/game.o ./hero/hero.o ./enemy/enemy.o -o jogo $(CFLAGS) $(LIBS)
+jogo: main.c ./barrier/barrier.o ./bullet/bullet.o ./enemy/enemy.o ./game/game.o ./hero/hero.o ./maps/maps.o ./boss/boss.o
+	gcc main.c ./barrier/barrier.o ./bullet/bullet.o ./maps/maps.o ./boss/boss.o ./game/game.o ./hero/hero.o ./enemy/enemy.o -o jogo $(CFLAGS) $(LIBS)
 
 # O comando `make run` vai compilar e rodar seu código!
 # Não se esqueca de colocar seu módulo depois de `jogo`
@@ -42,3 +42,6 @@ hero.o: ./hero/hero.c ../game/game.h
 
 maps.o: ./maps/maps.c ../game/game.h
 	gcc ./maps/maps.c -o maps $(CFLAGS) $(LIBS)
+
+boss.o: ./boss/boss.c ../game/game.h 
+	gcc ./boss/boss.c -o boss $(CFLAGS) $(LIBS)

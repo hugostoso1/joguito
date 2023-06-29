@@ -185,15 +185,21 @@ void map8_setup(Game *g){
     g->maps[8].num_barriers = 4;
     g->maps[8].barriers[0] = (Rectangle) {g->screenWidth/5 , (g->screenHeight/2) - 10, g->screenHeight/4, 10};
     g->maps[8].barriers[1] = (Rectangle) {g->screenWidth/2 + g->screenWidth/5, (g->screenHeight/2) - 10, g->screenHeight/4, 10};
-    g->maps[8].barriers[2] = (Rectangle) {g->screenWidth/2,g->screenHeight/7, 10, g->screenHeight/4};
-    g->maps[8].barriers[3] = (Rectangle) {g->screenWidth/2,g->screenHeight/2 + g->screenHeight/7, 10, g->screenHeight/4};
+    g->maps[8].barriers[2] = (Rectangle) {g->screenWidth/2,g->screenHeight/8, 10, g->screenHeight/4};
+    g->maps[8].barriers[3] = (Rectangle) {g->screenWidth/2,g->screenHeight/2 + g->screenHeight/8, 10, g->screenHeight/4};
     g->maps[8].color = GRAY;
     g->maps[8].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/6, SCREEN_BORDER, 50};
     g->maps[8].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2, 5, 50};
-    g->maps[8].num_enemies = 3;
+
+    g->boss.life = 5;
+    g->boss.pos = (Rectangle) {g->screenWidth/2 - (g->boss.life * 15)/2, g->screenHeight/2 - (g->boss.life * 15)/2, g->boss.life * 15, g->boss.life * 15};
+    g->boss.color = GREEN;
+    g->boss.speed = 5;
+    g->boss.direction = KEY_RIGHT + (rand() % 4);
+    g->boss.draw = 1;
+
+    g->maps[8].num_enemies = 2;
     g->maps[8].door_locked = 1;
-
-
 }
 
 void resetMap(Game *g){

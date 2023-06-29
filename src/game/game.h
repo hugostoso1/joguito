@@ -72,6 +72,7 @@ typedef struct Game
     int gameover;
     int score;
     char mode;
+    Boss boss;
     clock_t time;
 } Game;
 
@@ -85,6 +86,7 @@ void UpdateDrawFrame(Game *g); // Update and Draw (one frame)
 void draw_borders(Game *g);
 int barrier_collision(Map *m, Rectangle *t);
 void update_enemy_pos(Game *g, Enemy *e);
+void update_boss_pos(Game *g, Boss *B);
 void update_hero_pos(Game *g);
 void shoot(Hero *b, Rectangle *position, Game *g);
 void update_bullet_pos(Hero *b, Game *g);

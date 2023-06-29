@@ -26,6 +26,7 @@ void InitGame(Game *g)
     map1_setup(g);
     map2_setup(g);
     map3_setup(g);
+    map8_setup(g);
 }
 
 void UpdateGame(Game *g)
@@ -46,7 +47,9 @@ void UpdateGame(Game *g)
         }
 
         update_enemy_pos(g, &map->enemies[i]);
-        
+        if(g->curr_map == 8) {
+            update_boss_pos(g,&g->boss);
+        }
 
         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
         {
@@ -72,8 +75,8 @@ void UpdateGame(Game *g)
 
         bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet);
         bulletCollison(&map->enemies[i].enemyBullet2, &g->hero.bullet);
-        bulletCollison(&map->enemies[i].enemyBullet2, &g->hero.bullet2);      
-        bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet2);  
+        bulletCollison(&map->enemies[i].enemyBullet2, &g->hero.bullet2); 
+        bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet2);       
         
 
 
@@ -155,6 +158,10 @@ void DrawGame(Game *g)
         if(g->maps[g->curr_map].enemies[i].enemyBullet2.active){
             DrawRectangleRec(g->maps[g->curr_map].enemies[i].enemyBullet2.pos, g->maps[g->curr_map].enemies[i].enemyBullet2.color);
         }
+    }
+
+    if(g->boss.draw && (g->curr_map == 8)) {
+        DrawRectangleRec(g->boss.pos, g->boss.color);
     }
 
     EndDrawing();
