@@ -183,10 +183,10 @@ void map3_setup(Game *g){
 
 void map8_setup(Game *g){
     g->maps[8].num_barriers = 4;
-    g->maps[8].barriers[0] = (Rectangle) {g->screenWidth/6, 0, 2, 0.3 * g->screenHeight};
-    g->maps[8].barriers[1] = (Rectangle) {2*g->screenWidth/6, 0.7 * g->screenHeight, 2, g->screenHeight};
-    g->maps[8].barriers[2] = (Rectangle) {3*g->screenWidth/6, 0, 2, 0.3 * g->screenHeight};
-    g->maps[8].barriers[8] = (Rectangle) {4*g->screenWidth/6, 0.7 * g->screenHeight, 2, g->screenHeight};
+    g->maps[8].barriers[0] = (Rectangle) {g->screenWidth/5 , (g->screenHeight/2) - 10, g->screenHeight/4, 10};
+    g->maps[8].barriers[1] = (Rectangle) {g->screenWidth/2 + g->screenWidth/5, (g->screenHeight/2) - 10, g->screenHeight/4, 10};
+    g->maps[8].barriers[2] = (Rectangle) {g->screenWidth/2,g->screenHeight/7, 10, g->screenHeight/4};
+    g->maps[8].barriers[3] = (Rectangle) {g->screenWidth/2,g->screenHeight/2 + g->screenHeight/7, 10, g->screenHeight/4};
     g->maps[8].color = GRAY;
     g->maps[8].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/6, SCREEN_BORDER, 50};
     g->maps[8].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2, 5, 50};
