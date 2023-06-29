@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include <stdlib.h>
+#include <sys/time.h> 
 #include <stdio.h>
+#include <unistd.h> 
 #include <time.h>
 #include "./game/game.h"
 
@@ -65,7 +67,9 @@ int main(void)
     }
 
     game.mode = (select) ? 'N' : 'H';
-    game.time = clock();
+    struct timeval start, end;
+    gettimeofday(&start, NULL);
+    
 
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
@@ -73,13 +77,23 @@ int main(void)
         if (game.gameover)
             break;
     }
+    time;
 
-    game.time = clock() - game.time; // Números de clock gastos do processador
-    game.score = (int)game.time/(CLOCKS_PER_SEC/1000);
+    gettimeofday(&end, NULL);
+ 
+    long seconds = (end.tv_sec - start.tv_sec);
+    long micros = ((seconds * 1000000) + end.tv_usec) - (start.tv_usec);
+ 
 
     FILE *p = fopen("pontuacoes.txt", "a");
-    fprintf(p, "%s--%d\n", nickname, game.score);
+    fprintf(p, "%s--%ld\n", nickname, seconds);
+    
+
     fclose(p);
+
+    FILE *pp = fopen("pontuacoes.txt", "r");
+
+
 
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
