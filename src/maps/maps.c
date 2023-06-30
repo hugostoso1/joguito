@@ -198,7 +198,7 @@ void map8_setup(Game *g){
     g->boss.direction = KEY_RIGHT + (rand() % 4);
     g->boss.draw = 1;
 
-    g->maps[8].num_enemies = 2;
+    g->maps[8].num_enemies = 5;
     g->maps[8].door_locked = 1;
 }
 
