@@ -88,12 +88,7 @@ int main(void)
     FILE *p = fopen("pontuacoes.txt", "a");
     fprintf(p, "%s--%ld\n", nickname, seconds);
     
-
     fclose(p);
-
-    FILE *pp = fopen("pontuacoes.txt", "r");
-
-
 
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {

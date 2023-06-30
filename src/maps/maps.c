@@ -191,8 +191,8 @@ void map8_setup(Game *g){
     g->maps[8].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/6, SCREEN_BORDER, 50};
     g->maps[8].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2, 5, 50};
 
-    g->boss.life = 5;
-    g->boss.pos = (Rectangle) {g->screenWidth/2 - (g->boss.life * 15)/2, g->screenHeight/2 - (g->boss.life * 15)/2, g->boss.life * 15, g->boss.life * 15};
+    g->boss.life = 10;
+    g->boss.pos = (Rectangle) {g->screenWidth/2 - 75, g->screenHeight/2 - 75, 80, 80};
     g->boss.color = GREEN;
     g->boss.speed = 5;
     g->boss.direction = KEY_RIGHT + (rand() % 4);

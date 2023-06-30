@@ -4,7 +4,7 @@
 void InitGame(Game *g)
 {
 
-    g->curr_map = 0;
+    g->curr_map = 8;
     g->num_maps = 10;
     g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
     g->hero.color = BLACK;
@@ -47,9 +47,6 @@ void UpdateGame(Game *g)
         }
 
         update_enemy_pos(g, &map->enemies[i]);
-        if(g->curr_map == 8) {
-            update_boss_pos(g,&g->boss);
-        }
 
         if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
         {
@@ -132,6 +129,35 @@ void UpdateGame(Game *g)
         g->hero.pos = (Rectangle){g->screenWidth - 50, g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
         g->hero.special = 0;
     }
+
+    if(g->curr_map == 8) {
+        update_boss_pos(g,&g->boss);
+
+        if(CheckCollisionRecs(g->hero.pos, g->boss.pos)) {
+            g->gameover = 1;
+        }
+
+        if (CheckCollisionRecs(g->hero.bullet.pos, g->boss.pos))
+        {
+            g->boss.life--;
+            if(g->boss.life == 0) {
+                g->gameover = 1;
+            }   
+            g->hero.bullet.active = 0;
+            g->hero.bullet.pos = g->hero.bullet.default_pos;
+        }
+
+        if (CheckCollisionRecs(g->hero.bullet2.pos, g->boss.pos))
+        {
+            g->boss.life--;
+            if(g->boss.life == 0) {
+                g->gameover = 1;
+            }     
+            g->hero.bullet2.active = 0;
+            g->hero.bullet2.pos = g->hero.bullet2.default_pos;
+        }
+    }
+
 }
 
 void DrawGame(Game *g)
