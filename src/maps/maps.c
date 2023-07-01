@@ -192,7 +192,7 @@ void map8_setup(Game *g){
 
     for(int i = 0; i<g->maps[8].num_enemies; i++) {
         g->maps[8].enemies[i].color = BLACK;
-        g->maps[8].enemies[i].speed = 7;
+        g->maps[8].enemies[i].speed = 6;
         g->maps[8].enemies[i].direction = KEY_RIGHT + (rand() % 4);
         g->maps[8].enemies[i].draw_enemy = 0;
         g->maps[8].enemies[i].has_key = 0;
@@ -214,6 +214,15 @@ void map8_setup(Game *g){
     g->boss.speed = 5;
     g->boss.direction = KEY_RIGHT + (rand() % 4);
     g->boss.draw = 1;
+    g->boss.bossBullet.active = 0;
+    g->boss.bossBullet.color = GREEN;
+    g->boss.bossBullet.default_pos = (Rectangle){5000,5000,45,15};
+    g->boss.bossBullet.speed = 10;
+    g->boss.bossBullet2.active = 0;
+    g->boss.bossBullet2.color = GREEN;
+    g->boss.bossBullet2.default_pos = (Rectangle){5000,5000,45,15};
+    g->boss.bossBullet2.speed = 10;
+
 
 }
 
@@ -238,14 +247,9 @@ void resetMap(Game *g){
                     g->hero.pos = (Rectangle){STD_SIZE_X, g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
                     map3_setup(g);
                     break;
+                
+                case 8:
+                    g->gameover = 1;
+                    break;
             }
-    if(g->curr_map == 8) {
-        int victory = 1;
-        for(int i = 0; i < g->maps[8].num_enemies; i++) {
-            if(g->maps[8].enemies[i].draw_enemy) {
-                g->gameover = 1;
-                return;
-            }
-        }
-    }
 }
