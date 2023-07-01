@@ -230,3 +230,5 @@ void bulletCollison(Bullet *b1, Bullet *b2){
         b2->pos = b2->default_pos;
     }
 }
+
+

@@ -1,16 +1,18 @@
 #include "../raylib.h"
 #include "./game.h"
 #include <stdlib.h>
+#include  <stdio.h>
 
 void InitGame(Game *g)
 {
 
-    g->curr_map = 0;
+    g->curr_map = 8;
     g->num_maps = 10;
     g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
     g->hero.color = BLACK;
     g->hero.speed = 10;
     g->hero.special = 0;
+
     g->hero.bullet.default_pos = (Rectangle){5500,5500,45,10};
     g->hero.bullet.direction = KEY_RIGHT;
     g->hero.bullet.color = PURPLE;
@@ -130,8 +132,11 @@ void UpdateGame(Game *g)
         g->hero.special = 0;
     }
 
+    // BOSS
     if(g->curr_map == 8) {
-        update_boss_pos(g,&g->boss);
+        if(g->boss.draw){
+            update_boss_pos(g,&g->boss);
+        }
 
         if(CheckCollisionRecs(g->hero.pos, g->boss.pos)) {
             g->gameover = 1;
@@ -160,10 +165,22 @@ void UpdateGame(Game *g)
                     g->maps[8].enemies[i].draw_enemy = 1;
                 }
                 g->boss.draw = 0;
+                
             }     
             g->hero.bullet2.active = 0;
             g->hero.bullet2.pos = g->hero.bullet2.default_pos;
         }
+        bulletCollison(&g->boss.bossBullet, &g->hero.bullet);
+        bulletCollison(&g->boss.bossBullet2, &g->hero.bullet);
+        bulletCollison(&g->boss.bossBullet2, &g->hero.bullet2);
+        bulletCollison(&g->boss.bossBullet, &g->hero.bullet2);
+
+        if(CheckCollisionRecs(g->boss.bossBullet.pos, g->hero.pos)){
+            g->gameover = 1;
+        }  
+        if(CheckCollisionRecs(g->boss.bossBullet2.pos, g->hero.pos)){
+            g->gameover = 1;
+        }  
     }
 
 }
@@ -196,7 +213,16 @@ void DrawGame(Game *g)
 
     if(g->boss.draw && (g->curr_map == 8)) {
         DrawRectangleRec(g->boss.pos, g->boss.color);
+        printf("%d %d\n", g->boss.draw, g->boss.life);
     }
+    
+    if(g->boss.bossBullet.active){
+        DrawRectangleRec(g->boss.bossBullet.pos, g->boss.bossBullet.color);
+    }
+    if(g->boss.bossBullet.active){
+        DrawRectangleRec(g->boss.bossBullet2.pos, g->boss.bossBullet2.color);
+    }
+
 
     EndDrawing();
 }

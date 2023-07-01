@@ -32,7 +32,8 @@ typedef struct Boss
     int direction;
     int draw;
     int life;
-    Bullet missile;
+    Bullet bossBullet;
+    Bullet bossBullet2;
 } Boss;
 
 typedef struct Hero
