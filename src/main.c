@@ -176,9 +176,6 @@ int main(void)
     fclose(pimba);
 }
 
-
-
-
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
         BeginDrawing();

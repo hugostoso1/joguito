@@ -5,11 +5,10 @@
 
 void InitGame(Game *g)
 {
-
-    g->curr_map = 8;
+    g->curr_map = 0;
     g->num_maps = 10;
     g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
-    g->hero.color = BLACK;
+    g->hero.color = WHITE;
     g->hero.speed = 10;
     g->hero.special = 0;
 
@@ -151,6 +150,9 @@ void UpdateGame(Game *g)
                     g->maps[8].enemies[i].draw_enemy = 1;
                 }
                 g->boss.draw = 0;
+                g->boss.bossBullet.pos = g->boss.bossBullet.default_pos;
+                g->boss.bossBullet2.pos = g->boss.bossBullet2.default_pos;
+                g->boss.pos = g->boss.bossBullet.default_pos;
             }   
             g->hero.bullet.active = 0;
             g->hero.bullet.pos = g->hero.bullet.default_pos;
@@ -165,6 +167,9 @@ void UpdateGame(Game *g)
                     g->maps[8].enemies[i].draw_enemy = 1;
                 }
                 g->boss.draw = 0;
+                g->boss.bossBullet.pos = g->boss.bossBullet.default_pos;
+                g->boss.bossBullet2.pos = g->boss.bossBullet2.default_pos;
+                g->boss.pos = g->boss.bossBullet.default_pos;
                 
             }     
             g->hero.bullet2.active = 0;
@@ -190,7 +195,7 @@ void DrawGame(Game *g)
     BeginDrawing();
 
     ClearBackground(RAYWHITE);
-    DrawRectangle(0, 0, g->screenWidth, g->screenHeight, GRAY);
+    DrawRectangle(0, 0, g->screenWidth, g->screenHeight, BLACK);
     draw_borders(g);
     draw_map(g);
 
@@ -213,7 +218,6 @@ void DrawGame(Game *g)
 
     if(g->boss.draw && (g->curr_map == 8)) {
         DrawRectangleRec(g->boss.pos, g->boss.color);
-        printf("%d %d\n", g->boss.draw, g->boss.life);
     }
     
     if(g->boss.bossBullet.active){
