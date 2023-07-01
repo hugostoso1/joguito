@@ -188,8 +188,25 @@ void map8_setup(Game *g){
     g->maps[8].barriers[2] = (Rectangle) {g->screenWidth/2,g->screenHeight/8, 10, g->screenHeight/4};
     g->maps[8].barriers[3] = (Rectangle) {g->screenWidth/2,g->screenHeight/2 + g->screenHeight/8, 10, g->screenHeight/4};
     g->maps[8].color = GRAY;
-    g->maps[8].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/6, SCREEN_BORDER, 50};
-    g->maps[8].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2, 5, 50};
+    g->maps[8].num_enemies = 5;
+
+    for(int i = 0; i<g->maps[8].num_enemies; i++) {
+        g->maps[8].enemies[i].color = BLACK;
+        g->maps[8].enemies[i].speed = 7;
+        g->maps[8].enemies[i].direction = KEY_RIGHT + (rand() % 4);
+        g->maps[8].enemies[i].draw_enemy = 0;
+        g->maps[8].enemies[i].has_key = 0;
+        g->maps[8].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
+        g->maps[8].enemies[i].enemyBullet.active = 0;
+        g->maps[8].enemies[i].enemyBullet.color = RED;
+        g->maps[8].enemies[i].enemyBullet.speed = 7;
+        g->maps[8].enemies[i].enemyBullet.direction = KEY_LEFT;
+        g->maps[8].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
+        g->maps[8].enemies[i].enemyBullet2.active = 0;
+        g->maps[8].enemies[i].enemyBullet2.color = RED;
+        g->maps[8].enemies[i].enemyBullet2.speed = 7;
+        g->maps[8].enemies[i].enemyBullet2.direction = KEY_LEFT;
+    }
 
     g->boss.life = 10;
     g->boss.pos = (Rectangle) {g->screenWidth/2 - 75, g->screenHeight/2 - 75, 80, 80};
@@ -198,8 +215,6 @@ void map8_setup(Game *g){
     g->boss.direction = KEY_RIGHT + (rand() % 4);
     g->boss.draw = 1;
 
-    g->maps[8].num_enemies = 5;
-    g->maps[8].door_locked = 1;
 }
 
 void resetMap(Game *g){
@@ -222,7 +237,15 @@ void resetMap(Game *g){
                 case 3:
                     g->hero.pos = (Rectangle){STD_SIZE_X, g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
                     map3_setup(g);
-                    break;               
-
+                    break;
             }
+    if(g->curr_map == 8) {
+        int victory = 1;
+        for(int i = 0; i < g->maps[8].num_enemies; i++) {
+            if(g->maps[8].enemies[i].draw_enemy) {
+                g->gameover = 1;
+                return;
+            }
+        }
+    }
 }

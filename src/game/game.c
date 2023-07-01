@@ -77,7 +77,6 @@ void UpdateGame(Game *g)
         bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet2);       
         
 
-
         if (CheckCollisionRecs(map->enemies[i].enemyBullet.pos, g->hero.pos)){
             map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
             if(!g->hero.special) {
@@ -142,7 +141,11 @@ void UpdateGame(Game *g)
         {
             g->boss.life--;
             if(g->boss.life == 0) {
-                g->gameover = 1;
+                for(int i=0; i< g->maps[8].num_enemies; i++){
+                    g->maps[8].enemies[i].pos = g->boss.pos;
+                    g->maps[8].enemies[i].draw_enemy = 1;
+                }
+                g->boss.draw = 0;
             }   
             g->hero.bullet.active = 0;
             g->hero.bullet.pos = g->hero.bullet.default_pos;
@@ -154,21 +157,7 @@ void UpdateGame(Game *g)
             if(g->boss.life == 0) {
                 for(int i=0; i< g->maps[8].num_enemies; i++){
                     g->maps[8].enemies[i].pos = g->boss.pos;
-                    g->maps[8].enemies[i].color = BLACK;
-                    g->maps[8].enemies[i].speed = 7;
-                    g->maps[8].enemies[i].direction = KEY_RIGHT + (rand() % 4);
                     g->maps[8].enemies[i].draw_enemy = 1;
-                    g->maps[8].enemies[i].has_key = 0;
-                    g->maps[8].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
-                    g->maps[8].enemies[i].enemyBullet.active = 0;
-                    g->maps[8].enemies[i].enemyBullet.color = RED;
-                    g->maps[8].enemies[i].enemyBullet.speed = 7;
-                    g->maps[8].enemies[i].enemyBullet.direction = KEY_LEFT;
-                    g->maps[8].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
-                    g->maps[8].enemies[i].enemyBullet2.active = 0;
-                    g->maps[8].enemies[i].enemyBullet2.color = RED;
-                    g->maps[8].enemies[i].enemyBullet2.speed = 7;
-                    g->maps[8].enemies[i].enemyBullet2.direction = KEY_LEFT;
                 }
                 g->boss.draw = 0;
             }     
