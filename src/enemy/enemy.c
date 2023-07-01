@@ -8,7 +8,7 @@ void update_enemy_pos(Game *g, Enemy *e)
 
     update_enemyBullet_pos(e, g);
 
-    if(!e->enemyBullet.active){
+    if(!e->enemyBullet.active && rand() % 5 == 1){
         int x = g->hero.pos.x - e->pos.x;
         int y = g->hero.pos.y - e->pos.y;
     
@@ -23,7 +23,7 @@ void update_enemy_pos(Game *g, Enemy *e)
             e->enemyBullet.active = 1;
         }
     }
-    else if(!e->enemyBullet2.active  &&  rand() % 50 == 1){
+    else if(!e->enemyBullet2.active  &&  rand() % 50 == 1 && (g->mode == 'H')){
 
         int xx = g->hero.pos.x - e->pos.x;
         int yy = g->hero.pos.y - e->pos.y;

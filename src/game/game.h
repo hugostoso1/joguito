@@ -1,3 +1,4 @@
+#include <time.h>
 #define STD_SIZE_X 30
 #define STD_SIZE_Y 30
 #define SCREEN_BORDER 4
@@ -22,6 +23,17 @@ typedef struct Enemy
     Bullet enemyBullet;
     Bullet enemyBullet2;
 } Enemy;
+
+typedef struct Boss 
+{
+    Rectangle pos;
+    Color color;
+    int speed;
+    int direction;
+    int draw;
+    int life;
+    Bullet missile;
+} Boss;
 
 typedef struct Hero
 {
@@ -59,6 +71,9 @@ typedef struct Game
     int screenHeight;
     int gameover;
     int score;
+    char mode;
+    Boss boss;
+    clock_t time;
 } Game;
 
 //------------------------------------------------------------------------------------
@@ -71,13 +86,17 @@ void UpdateDrawFrame(Game *g); // Update and Draw (one frame)
 void draw_borders(Game *g);
 int barrier_collision(Map *m, Rectangle *t);
 void update_enemy_pos(Game *g, Enemy *e);
+void update_boss_pos(Game *g, Boss *B);
 void update_hero_pos(Game *g);
 void shoot(Hero *b, Rectangle *position, Game *g);
 void update_bullet_pos(Hero *b, Game *g);
 void shootEnemy(Bullet *b, Rectangle *position, Game *g);
 void update_enemyBullet_pos(Enemy *e, Game *g);
+void bulletCollison(Bullet *b1, Bullet *b2);
 void draw_map(Game *g);
+void resetMap(Game *g);
 void map0_setup(Game *g);
 void map1_setup(Game *g);
 void map2_setup(Game *g);
 void map3_setup(Game *g);
+void map8_setup(Game *g);

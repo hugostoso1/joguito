@@ -15,7 +15,7 @@ void shoot(Hero *b, Rectangle *position, Game *g) {
         }
         b->bullet.active = 1;
     }
-    else if(IsKeyPressed(KEY_SPACE) &&  b->bullet2.active == 0){
+    else if(IsKeyPressed(KEY_SPACE) &&  b->bullet2.active == 0 && (g->mode == 'N')){
         if(b->bullet2.direction == KEY_UP || b->bullet2.direction == KEY_DOWN) {
             b->bullet2.pos = (Rectangle){position->x,position->y,15,45};
         }
@@ -228,5 +228,14 @@ void update_enemyBullet_pos(Enemy *e, Game *g){
 void shootEnemy(Bullet *b, Rectangle *position, Game *g) {
     if(b->active){
         update_enemyBullet_pos(g->maps->enemies,g);
+    }
+}
+
+void bulletCollison(Bullet *b1, Bullet *b2){
+    if(CheckCollisionRecs(b1->pos, b2->pos)){
+        b1->active = 0;
+        b2->active = 0;
+        b1->pos = b1->default_pos;
+        b2->pos = b2->default_pos;
     }
 }

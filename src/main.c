@@ -1,13 +1,16 @@
 #include "raylib.h"
 #include <stdlib.h>
+#include <sys/time.h> 
 #include <stdio.h>
+#include <unistd.h> 
+#include <time.h>
 #include "./game/game.h"
 
 int main(void)
 {
     Game game;
-    game.screenWidth = 800;
-    game.screenHeight = 480;
+    game.screenWidth = 1500;
+    game.screenHeight = 700;
 
     InitWindow(game.screenWidth, game.screenHeight, "Aedsinho's quest");
     SetTargetFPS(60);
@@ -19,9 +22,9 @@ int main(void)
     while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
-        DrawText("ESCREVA UM NICKNAME", GetScreenWidth() / 2 - MeasureText("ESCREVA UM NICKNAME", 20) / 2, GetScreenHeight() / 2 - 50, 20, BLACK);
+        DrawText("ESCREVA UM NICKNAME", GetScreenWidth() / 2 - MeasureText("ESCREVA UM NICKNAME", 55) / 2, GetScreenHeight() / 2 - 50, 55, BLACK);
         if(countNick) {
-            DrawText(nickname, GetScreenWidth() / 2 - MeasureText(nickname, 20) / 2, GetScreenHeight()- 150, 20, BLACK);
+            DrawText(nickname, GetScreenWidth() / 2 - MeasureText(nickname, 35) / 2, GetScreenHeight()- 150, 35, BLACK);
         }
         EndDrawing();
         int key = GetKeyPressed();
@@ -45,7 +48,7 @@ int main(void)
     while(!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
-        DrawText("ESCOLHA UM MODO DE JOGO:", GetScreenWidth() / 2 - MeasureText("ESCOLHA UM MODO DE JOGO:", 20) / 2, GetScreenHeight() / 2 - 75, 20, BLACK);
+        DrawText("ESCOLHA UM MODO DE JOGO:", GetScreenWidth() / 2 - MeasureText("ESCOLHA UM MODO DE JOGO:", 55) / 2, GetScreenHeight() / 2 - 75, 55, BLACK);
         if(IsKeyDown(KEY_DOWN)) {
             select = 0;
         } else if (IsKeyDown(KEY_UP)) {
@@ -53,15 +56,20 @@ int main(void)
         }
 
         if(select) {
-            DrawText("NORMAL GAME", GetScreenWidth() / 2 - MeasureText("NORMAL GAME", 25) / 2, GetScreenHeight() - 200, 25, WHITE);
-            DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 20) / 2, GetScreenHeight() - 150, 20, BLACK);
+            DrawText("NORMAL GAME", GetScreenWidth() / 2 - MeasureText("NORMAL GAME", 55) / 2, GetScreenHeight() - 230, 55, WHITE);
+            DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 40) / 2, GetScreenHeight() - 150, 40, BLACK);
         } else {
-            DrawText("NORMAL GAME", GetScreenWidth() / 2 - MeasureText("NORMAL GAME", 20) / 2, GetScreenHeight() - 200, 20, BLACK);
-            DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 25) / 2, GetScreenHeight() - 150, 25, WHITE);
+            DrawText("NORMAL GAME", GetScreenWidth() / 2 - MeasureText("NORMAL GAME", 40) / 2, GetScreenHeight() - 230, 40, BLACK);
+            DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 55) / 2, GetScreenHeight() - 150, 55, WHITE);
         }
         EndDrawing();
         if(IsKeyPressed(KEY_ENTER)) break;
     }
+
+    game.mode = (select) ? 'N' : 'H';
+    struct timeval start, end;
+    gettimeofday(&start, NULL);
+    
 
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
@@ -69,17 +77,24 @@ int main(void)
         if (game.gameover)
             break;
     }
+    time;
 
-    FILE *p = fopen("nickname.txt", "a");
-    fprintf(p, "%s--%d\n", nickname, game.score);
+    gettimeofday(&end, NULL);
+ 
+    long seconds = (end.tv_sec - start.tv_sec);
+    long micros = ((seconds * 1000000) + end.tv_usec) - (start.tv_usec);
+ 
 
+    FILE *p = fopen("pontuacoes.txt", "a");
+    fprintf(p, "%s--%ld\n", nickname, seconds);
+    
     fclose(p);
 
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 20) / 2, GetScreenHeight() / 2 - 50, 20, BLACK);
+        DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 55) / 2, GetScreenHeight() / 2 - 50, 55, BLACK);
         EndDrawing();
 
     }
