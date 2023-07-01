@@ -5,7 +5,21 @@
 #include <unistd.h> 
 #include <time.h>
 #include "./game/game.h"
+#include <string.h>
 
+/*     void bubbleSort(int arr[], int tamanho) {
+    int i, j;
+    for (i = 0; i < tamanho - 1; i++) {
+        for (j = 0; j < tamanho - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+} 
+ */
 int main(void)
 {
     Game game;
@@ -85,10 +99,98 @@ int main(void)
     long micros = ((seconds * 1000000) + end.tv_usec) - (start.tv_usec);
  
 
-    FILE *p = fopen("pontuacoes.txt", "a");
-    fprintf(p, "%s--%ld\n", nickname, seconds);
+    FILE *p = fopen("score.txt", "a");
+    fprintf(p, "%s\n%ld\n", nickname, seconds);
+    fclose(p);  //le o da rodada
+
+    FILE *arquivo = fopen("score.txt", "r");
+    char linha[100];
+    char *lines[100];  // Array para armazenar as strings
+
+    // Abre o arquivo para leitura
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    int i = 0;
+
+    // Lê cada linha do arquivo
+    while (fgets(linha, 100, arquivo) != NULL) {
+        // Aloca memória para a string atual
+        lines[i] = malloc(strlen(linha) + 1);
+        if (lines[i] == NULL) {
+            printf("Erro ao alocar memória.\n");
+            return 1;
+        }
+
+        // Copia a linha lida para a string atual
+        strcpy(lines[i], linha);
+        i++;
+    }
+
+    int num_lines = i; // Número total de linhas lidas
+
+    // Fecha o arquivo
+    fclose(arquivo);
+
+
+    //leitura das coisas nos arquivos
+
+    int v[num_lines/2];
+    int vet = 0;
+    int l = 1;
+    i = 0;
+
+    while (1) {
+        v[vet] = atoi(lines[l]);
+        l++;
+        l++;
+        vet++;
+        if (l > num_lines) {
+            break;
+        }
+    }
+
+   // bubbleSort(v, num_lines/2);
+    if (num_lines > 8) {
+    FILE *pimba = fopen("score.txt", "w");
+    if (pimba == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    // Escrever a última linha primeiro
+    fprintf(pimba, "%s%d\n", lines[(num_lines - 2)], v[(num_lines/2 - 1)]);
+
+    // Escrever as outras linhas e valores
+    for (int j = 0; j < 8/2 - 1; j++) {
+        fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
+    }}
+
+    if(num_lines <= 8){
+        FILE *pimba = fopen("score.txt", "w");
+    if (pimba == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    // Escrever a última linha primeiro
+    fprintf(pimba, "%s%d\n", lines[(num_lines - 2)], v[(num_lines/2 - 1)]);
+
+    // Escrever as outras linhas e valores
+    for (int j = 0; j < num_lines/2 - 1; j++) {
+        fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
+
+    }
     
-    fclose(p);
+
+    fclose(pimba);
+}
+
+
+
 
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
@@ -98,5 +200,9 @@ int main(void)
         EndDrawing();
 
     }
+      for (i = 0; i < num_lines; i++) {
+        free(lines[i]);  // Libera a memória alocada para cada string
+    }
+
     return 0;
 }
