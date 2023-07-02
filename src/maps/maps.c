@@ -59,7 +59,7 @@ void map0_setup(Game *g)
         g->maps[0].enemies[i].enemyBullet2.speed = 10;
         g->maps[0].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[0].enemies[rand()%5].has_key = 1;
+    g->maps[0].enemies[rand()%4].has_key = 1;
     g->maps[0].special_item = (Rectangle){2 * g->screenWidth / 3, 20, 15, 15};
     g->maps[0].draw_special_item = 1;
     g->maps[0].prev_map = -1;
@@ -95,7 +95,7 @@ void map1_setup(Game *g)
         g->maps[1].enemies[i].enemyBullet2.speed = 2;
         g->maps[1].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[1].enemies[rand()%9].has_key = 1;
+    g->maps[1].enemies[rand()%8].has_key = 1;
     g->maps[1].special_item = (Rectangle){4 * g->screenWidth / 5, 20, 15, 15};
     g->maps[1].draw_special_item = 1;
     g->maps[1].prev_map = 0;
@@ -132,7 +132,7 @@ void map2_setup(Game *g)
         g->maps[2].enemies[i].enemyBullet2.speed = 7;
         g->maps[2].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[2].enemies[rand()%3].has_key = 1;
+    g->maps[2].enemies[rand()%4].has_key = 1;
     g->maps[2].special_item = (Rectangle){4 * g->screenWidth / 5, 20, 15, 15};
     g->maps[2].draw_special_item = 1;
     g->maps[2].prev_map = 1;
@@ -169,7 +169,7 @@ void map3_setup(Game *g){
         g->maps[3].enemies[i].enemyBullet2.speed = 7;
         g->maps[3].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[3].enemies[rand()%2].has_key = 1;
+    g->maps[3].enemies[rand()%3].has_key = 1;
     g->maps[3].special_item = (Rectangle) {4*g->screenWidth/5, 20, 15, 15};
     g->maps[3].draw_special_item = 1;
     g->maps[3].prev_map = 2;
@@ -178,9 +178,9 @@ void map3_setup(Game *g){
 
 void map4_setup(Game *g){
     g->maps[4].num_barriers = 3;
-    g->maps[4].barriers[0] = (Rectangle) {200, g->screenHeight/2 - 10, g->screenWidth/6, 20};
-    g->maps[4].barriers[1] = (Rectangle) {375 + g->screenWidth/6, g->screenHeight/2 - 10, g->screenWidth/6, 20};
-    g->maps[4].barriers[2] = (Rectangle) {375 + (2*g->screenWidth/6), g->screenHeight/2 - 10, g->screenWidth/6, 20};
+    g->maps[4].barriers[0] = (Rectangle) {g->screenWidth * 0.13, g->screenHeight/2 - 10, g->screenWidth/6, 20};
+    g->maps[4].barriers[1] = (Rectangle) {g->screenWidth * 0.41, g->screenHeight/2 - 10, g->screenWidth/6, 20};
+    g->maps[4].barriers[2] = (Rectangle) {g->screenWidth * 0.69, g->screenHeight/2 - 10, g->screenWidth/6, 20};
     g->maps[4].color = BLACK;
     g->maps[4].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), 0.15 * g->screenHeight, SCREEN_BORDER, 50};
     g->maps[4].prev_door = (Rectangle) {SCREEN_BORDER, 0.85 * g->screenHeight, 5, 50};
@@ -204,7 +204,7 @@ void map4_setup(Game *g){
         g->maps[4].enemies[i].enemyBullet2.speed = 7;
         g->maps[4].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[4].enemies[rand()%6].has_key = 1;
+    g->maps[4].enemies[rand()%5].has_key = 1;
     g->maps[4].special_item = (Rectangle) {g->screenWidth/2, 0.42*g->screenHeight, 15, 15};
     g->maps[4].draw_special_item = 1;
     g->maps[4].prev_map = 3;
@@ -214,9 +214,9 @@ void map4_setup(Game *g){
 void map5_setup(Game *g){
     g->maps[5].num_barriers = 4;
     g->maps[5].barriers[0] = (Rectangle) {g->screenWidth/5, 0.57 * g->screenHeight, 30, 0.47 * g->screenHeight};
-    g->maps[5].barriers[1] = (Rectangle) {2*g->screenWidth, 100, 30, 0.47 * g->screenHeight};
-    g->maps[5].barriers[2] = (Rectangle) {3*g->screenWidth/5, 0.57 * g->screenHeight, 30, 0.47 * g->screenHeight};
-    g->maps[5].barriers[3] = (Rectangle) {2*g->screenWidth, 100, 30, 0.47 * g->screenHeight};
+    g->maps[5].barriers[1] = (Rectangle) {2*(g->screenWidth/5), 100, 30, 0.47 * g->screenHeight};
+    g->maps[5].barriers[2] = (Rectangle) {3*(g->screenWidth/5), 0.57 * g->screenHeight, 30, 0.47 * g->screenHeight};
+    g->maps[5].barriers[3] = (Rectangle) {2*(g->screenWidth/5), 100, 30, 0.47 * g->screenHeight};
     g->maps[5].color = BLACK;
     g->maps[5].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/2 - SCREEN_BORDER/2, SCREEN_BORDER, 50};
     g->maps[5].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2 - SCREEN_BORDER/2, 5, 50};
@@ -240,7 +240,7 @@ void map5_setup(Game *g){
         g->maps[5].enemies[i].enemyBullet2.speed = 9;
         g->maps[5].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[5].enemies[0].has_key = 1;
+    g->maps[5].enemies[rand()%4].has_key = 1;
     g->maps[5].special_item = (Rectangle) {g->screenWidth/2,g->screenHeight/2, 15, 15};
     g->maps[5].draw_special_item = 1;
     g->maps[5].prev_map = 4;
@@ -250,10 +250,10 @@ void map5_setup(Game *g){
 void map6_setup(Game *g){
     g->maps[6].num_barriers = 2;
     g->maps[6].barriers[0] = (Rectangle) {g->screenWidth/5, g->screenHeight/2 - 50, 100, 100};
-    g->maps[6].barriers[1] = (Rectangle) {2*(g->screenWidth/5 + 100), g->screenHeight/2 - 50, 100, 100};
+    g->maps[6].barriers[1] = (Rectangle) {g->screenWidth/5 + g->screenWidth/2, g->screenHeight/2 - 50, 100, 100};
     g->maps[6].color = BLACK;
-    g->maps[6].door = (Rectangle) {g->screenWidth/2-25, g->screenHeight - SCREEN_BORDER, 50, SCREEN_BORDER};
-    g->maps[6].prev_door = (Rectangle) {g->screenWidth/2 - 25, SCREEN_BORDER, 50, SCREEN_BORDER};
+    g->maps[6].door = (Rectangle) {g->screenWidth - (50 + SCREEN_BORDER), g->screenHeight - SCREEN_BORDER, 50, SCREEN_BORDER};
+    g->maps[6].prev_door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/2 - SCREEN_BORDER/2, SCREEN_BORDER, 50};
     g->maps[6].num_enemies = 5;
     g->maps[6].door_locked = 1;
     for(int i=0; i< g->maps[6].num_enemies; i++){
@@ -284,11 +284,48 @@ void map6_setup(Game *g){
         g->maps[6].enemies[i].enemyBullet2.speed = 9;
         g->maps[6].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[6].enemies[0].has_key = 1;
+    g->maps[6].enemies[rand()%5].has_key = 1;
     g->maps[6].special_item = (Rectangle) {g->screenWidth/2,g->screenHeight/2, 15, 15};
     g->maps[6].draw_special_item = 1;
     g->maps[6].prev_map = 5;
     g->maps[6].next_map = 7;
+}
+
+void map7_setup(Game *g) {
+    g->maps[7].num_barriers = 5;
+    g->maps[7].barriers[0] = (Rectangle) {g->screenWidth * 0.17, g->screenHeight/4, g->screenWidth/10, 10};
+    g->maps[7].barriers[1] = (Rectangle) {g->screenWidth * 0.17, g->screenHeight/4, g->screenWidth/10, 10};
+    g->maps[7].barriers[2] = (Rectangle) {g->screenWidth/2 - (g->screenWidth/10)/2 , g->screenHeight - 5, g->screenWidth/10, 10};
+    g->maps[7].barriers[3] = (Rectangle) {g->screenWidth/2 + g->screenWidth * 0.18, g->screenHeight/2 + g->screenHeight/4, g->screenWidth/10, 10};
+    g->maps[7].barriers[3] = (Rectangle) {g->screenWidth/2 + g->screenWidth * 0.18, g->screenHeight/2 + g->screenHeight/4, g->screenWidth/10, 10};
+    g->maps[7].color = BLACK;
+    g->maps[7].door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2 - SCREEN_BORDER/2, 5, 50};
+    g->maps[7].prev_door = (Rectangle) {g->screenWidth - (50 + SCREEN_BORDER), SCREEN_BORDER, 50, SCREEN_BORDER};
+    g->maps[7].num_enemies = 6;
+    g->maps[7].door_locked = 1;
+    for(int i=0; i< g->maps[7].num_enemies; i++){
+        g->maps[7].enemies[i].pos = (Rectangle) { 0.4*g->screenWidth, 0.15*g->screenHeight, STD_SIZE_X, STD_SIZE_Y};
+        g->maps[7].enemies[i].color = BLUE;
+        g->maps[7].enemies[i].speed = 8;
+        g->maps[7].enemies[i].direction = KEY_RIGHT + (rand() % 4);
+        g->maps[7].enemies[i].draw_enemy = 1;
+        g->maps[7].enemies[i].has_key = 0;
+        g->maps[7].enemies[i].enemyBullet.default_pos = (Rectangle){5000,5000,45,15};
+        g->maps[7].enemies[i].enemyBullet.active = 0;
+        g->maps[7].enemies[i].enemyBullet.color = RED;
+        g->maps[7].enemies[i].enemyBullet.speed = 8;
+        g->maps[7].enemies[i].enemyBullet.direction = KEY_LEFT;
+        g->maps[7].enemies[i].enemyBullet2.default_pos = (Rectangle){5100,5100,45,15};
+        g->maps[7].enemies[i].enemyBullet2.active = 0;
+        g->maps[7].enemies[i].enemyBullet2.color = RED;
+        g->maps[7].enemies[i].enemyBullet2.speed = 8;
+        g->maps[7].enemies[i].enemyBullet2.direction = KEY_LEFT;
+    }
+    g->maps[7].enemies[rand()%6].has_key = 1;
+    g->maps[7].special_item = (Rectangle) {g->screenWidth/2,g->screenHeight/2, 15, 15};
+    g->maps[7].draw_special_item = 1;
+    g->maps[7].prev_map = 6;
+    g->maps[7].next_map = 8;
 }
 
 void map8_setup(Game *g){
@@ -369,6 +406,11 @@ void resetMap(Game *g){
         case 6:
             g->hero.pos = (Rectangle) {g->screenWidth/2 - STD_SIZE_X/2, STD_SIZE_Y + 5, STD_SIZE_X, STD_SIZE_Y};
             map6_setup(g);
+            break;
+
+        case 7:
+            g->hero.pos = (Rectangle) {g->screenWidth - (SCREEN_BORDER + STD_SIZE_X), STD_SIZE_Y, STD_SIZE_X, STD_SIZE_Y};
+            map7_setup(g);
             break;
                 
         case 8:
