@@ -6,6 +6,7 @@
 #include <time.h>
 #include "./game/game.h"
 #include <string.h>
+#include <stdio.h>
 
 int main(void)
 {
@@ -77,7 +78,9 @@ int main(void)
         UpdateDrawFrame(&game);
         if (game.gameover)
             break;
+        
     }
+
     time;
 
     gettimeofday(&end, NULL);
@@ -140,7 +143,6 @@ int main(void)
         }
     }
 
-   // bubbleSort(v, num_lines/2);
     if (num_lines > 8) {
     FILE *pimba = fopen("pontuacoes.txt", "w");
     if (pimba == NULL) {
@@ -171,21 +173,85 @@ int main(void)
         fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
 
     }
-    
 
     fclose(pimba);
 }
 
+
+        for(int i=0; i<num_lines; i++){
+            for(int p=0; p<100; p++){
+                if(lines[i][p] == '\n'){
+                    lines[i][p] = ' ';
+                    break;
+                }
+            }
+        }
+        
+        char first[100];
+        char second[100];
+        char third[100];
+        char total[500] = "";
+        nickname[strlen(nickname)-1] = ' ';
+
+        if (num_lines >= 2)
+        {
+            strcpy(first, lines[0]);
+
+            strcat(first, lines[1]);
+        }
+
+        if (num_lines >= 4)
+        {
+            strcpy(second, lines[2]);
+
+            strcat(second, lines[3]);
+        }
+        char aux[500];
+        sprintf(aux, "%ld", seconds);
+
+        if (num_lines >= 6)
+        {
+            strcpy(third, nickname);
+
+            strcat(third, aux);
+        }
+
+        printf("%s\n%s\n%s\n", third, first, second);
+        printf("\n");
+
+        
+
+            
+
+
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 55) / 2, GetScreenHeight() / 2 - 50, 55, BLACK);
-        EndDrawing();
+     //   if(game.victory){
+
+            BeginDrawing();
+            ClearBackground(RAYWHITE);
+            DrawText("PARABÉNS", GetScreenWidth() / 3 - MeasureText("PARABÉNS", 55) , 2 * GetScreenHeight() / 20  , 200, BLACK);
+            DrawText("Pontuações:",GetScreenWidth() / 3 - MeasureText("Pontuações:", 55) , 2 * GetScreenHeight() / 20 + 350 , 70, BLACK);
+            DrawText(third,GetScreenWidth() / 2.2 , 4 * GetScreenHeight() / 20 + 350 , 55, BLACK);
+            DrawText(first,GetScreenWidth() / 2.2 , 6 * GetScreenHeight() / 20 + 350 , 55, BLACK);
+            DrawText(second,GetScreenWidth() / 2.2 , 8 * GetScreenHeight() / 20 + 350 , 55, BLACK);
+            EndDrawing();
+
+        
+    /*     } else {
+            BeginDrawing();
+            ClearBackground(RAYWHITE);
+            DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 55) / 2, GetScreenHeight() / 2 - 50, 55, BLACK);
+            EndDrawing();
+          }  */
+        
 
     }
+
+
       for (i = 0; i < num_lines; i++) {
         free(lines[i]);  // Libera a memória alocada para cada string
+      //  free(y[i]);
     }
 
     return 0;

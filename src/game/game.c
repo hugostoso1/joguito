@@ -3,6 +3,17 @@
 #include <stdlib.h>
 #include  <stdio.h>
 
+int hasEnemies(Game *g) {
+    Map *map = &g->maps[8];
+    for (int i = 0; i < map->num_enemies; i++) {
+        if (map->enemies[i].draw_enemy)
+            return 1;
+    }
+    return 0;
+}
+
+
+
 void InitGame(Game *g)
 {
     g->curr_map = 0;
@@ -15,19 +26,23 @@ void InitGame(Game *g)
     g->hero.bullet.default_pos = (Rectangle){5500,5500,45,10};
     g->hero.bullet.direction = KEY_RIGHT;
     g->hero.bullet.color = PURPLE;
-    g->hero.bullet.speed = 15;
+    g->hero.bullet.speed = 100;
     g->hero.bullet.active = 0;
     g->hero.bullet2.default_pos = (Rectangle){5500,5500,45,10};
     g->hero.bullet2.direction = KEY_RIGHT;
     g->hero.bullet2.color = PURPLE;
-    g->hero.bullet2.speed = 15;
+    g->hero.bullet2.speed = 50;
     g->hero.bullet2.active = 0;
     g->gameover = 0;
+    
     g->score = 0;
     map0_setup(g);
     map1_setup(g);
     map2_setup(g);
     map3_setup(g);
+    map4_setup(g);
+    map5_setup(g);
+    map6_setup(g);
     map8_setup(g);
 }
 
@@ -40,30 +55,37 @@ void UpdateGame(Game *g)
     Map *map = &g->maps[g->curr_map];
     for (int i=0; i < map->num_enemies; i++)
     {
-        if (!map->enemies[i].draw_enemy){
+    
+        
+
+        update_enemy_pos(g, &map->enemies[i]);
+
+
+        if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
+        {
+            map->enemies[i].draw_enemy = 0;    
+            map->enemies[i].pos = (Rectangle){4500,4000,1,1};
             map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
             map->enemies[i].enemyBullet.active = 0;
             map->enemies[i].enemyBullet2.pos = map->enemies[i].enemyBullet2.default_pos;
             map->enemies[i].enemyBullet2.active = 0;
-            continue;
-        }
-
-        update_enemy_pos(g, &map->enemies[i]);
-
-        if (CheckCollisionRecs(g->hero.bullet.pos, map->enemies[i].pos))
-        {
-            map->enemies[i].draw_enemy = 0;            
             g->hero.bullet.active = 0;
             g->hero.bullet.pos = g->hero.bullet.default_pos;
             if (map->enemies[i].has_key)
             {
                 map->door_locked = 0;
             }
+
         }
 
         if (CheckCollisionRecs(g->hero.bullet2.pos, map->enemies[i].pos))
         {
-            map->enemies[i].draw_enemy = 0;            
+            map->enemies[i].draw_enemy = 0;    
+            map->enemies[i].pos = (Rectangle){4500,4000,1,1};
+            map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
+            map->enemies[i].enemyBullet.active = 0;
+            map->enemies[i].enemyBullet2.pos = map->enemies[i].enemyBullet2.default_pos;
+            map->enemies[i].enemyBullet2.active = 0;   
             g->hero.bullet2.active = 0;
             g->hero.bullet2.pos = g->hero.bullet2.default_pos;
             if (map->enemies[i].has_key)
@@ -78,17 +100,25 @@ void UpdateGame(Game *g)
         bulletCollison(&map->enemies[i].enemyBullet, &g->hero.bullet2);       
         
 
-        if (CheckCollisionRecs(map->enemies[i].enemyBullet.pos, g->hero.pos)){
+        if (map->enemies[i].enemyBullet.active && CheckCollisionRecs(map->enemies[i].enemyBullet.pos, g->hero.pos)){
             map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
             if(!g->hero.special) {
+                if(g->curr_map == 8)
+                g->gameover = 1;
+                 printf("aqui da erro tambem a");
                 resetMap(g);
+                continue;
             }
         }
 
-        if (CheckCollisionRecs(map->enemies[i].enemyBullet2.pos, g->hero.pos) && (g->mode == 'H')){
+        if (map->enemies[i].enemyBullet2.active && CheckCollisionRecs(map->enemies[i].enemyBullet2.pos, g->hero.pos) && (g->mode == 'H')){
             map->enemies[i].enemyBullet2.pos = map->enemies[i].enemyBullet2.default_pos;
             if(!g->hero.special) {
+                if(g->curr_map == 8)
+                g->gameover = 1;
+                printf("aqui da erro");
                 resetMap(g);
+                continue;
             }
         }
 
@@ -105,8 +135,13 @@ void UpdateGame(Game *g)
             }
             continue;
         }
-
-        resetMap(g);
+        if(g->curr_map != 8){
+            printf("pra puta que pariu\n");
+            resetMap(g);
+        }/* else{
+            printf("inferno\n");
+            g->gameover = 1;
+        } */
     }
 
     if (CheckCollisionRecs(g->hero.pos, map->special_item) && map->draw_special_item)
@@ -137,7 +172,9 @@ void UpdateGame(Game *g)
             update_boss_pos(g,&g->boss);
         }
 
+
         if(CheckCollisionRecs(g->hero.pos, g->boss.pos)) {
+            printf("hero/vilon\n");
             g->gameover = 1;
         }
 
@@ -150,6 +187,7 @@ void UpdateGame(Game *g)
                     g->maps[8].enemies[i].draw_enemy = 1;
                 }
                 g->boss.draw = 0;
+                g->boss.dead = 1;
                 g->boss.bossBullet.pos = g->boss.bossBullet.default_pos;
                 g->boss.bossBullet2.pos = g->boss.bossBullet2.default_pos;
                 g->boss.pos = g->boss.bossBullet.default_pos;
@@ -157,6 +195,7 @@ void UpdateGame(Game *g)
             g->hero.bullet.active = 0;
             g->hero.bullet.pos = g->hero.bullet.default_pos;
         }
+
 
         if (CheckCollisionRecs(g->hero.bullet2.pos, g->boss.pos))
         {
@@ -167,6 +206,7 @@ void UpdateGame(Game *g)
                     g->maps[8].enemies[i].draw_enemy = 1;
                 }
                 g->boss.draw = 0;
+                g->boss.dead = 1;
                 g->boss.bossBullet.pos = g->boss.bossBullet.default_pos;
                 g->boss.bossBullet2.pos = g->boss.bossBullet2.default_pos;
                 g->boss.pos = g->boss.bossBullet.default_pos;
@@ -181,11 +221,25 @@ void UpdateGame(Game *g)
         bulletCollison(&g->boss.bossBullet, &g->hero.bullet2);
 
         if(CheckCollisionRecs(g->boss.bossBullet.pos, g->hero.pos)){
-            g->gameover = 1;
+            if(g->boss.bossBullet.active){
+                printf("bala/heroi\n");
+                g->gameover = 1;
+
+            }
         }  
         if(CheckCollisionRecs(g->boss.bossBullet2.pos, g->hero.pos)){
-            g->gameover = 1;
+            if(g->boss.bossBullet2.active){
+                printf("bala/heroi\n");
+                g->gameover = 1;
+
+            }
+            
         }  
+        if(hasEnemies(g) == 0 && g->boss.dead == 1){
+            printf("sem inimigoz\n");
+            g->victory = 1;
+            g->gameover = 1;
+        }
     }
 
 }

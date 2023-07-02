@@ -21,7 +21,7 @@ run: jogo
 # limpar a pasta de artefatos de compilação, etc.
 # Não se esqueça de adicionar seu módulo depois de `jogo`
 clean:
-	rm jogo
+	rm jogo barrier/barrier.o boss/boss.o bullet/bullet.o enemy/enemy.o game/game.o hero/hero.o maps/maps.o
 
 .PHONY: run clean
 

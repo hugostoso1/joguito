@@ -8,7 +8,7 @@ void shoot(Hero *b, Rectangle *position, Game *g) {
 
     if(IsKeyPressed(KEY_SPACE) &&  b->bullet.active == 0){
         if(b->bullet.direction == KEY_UP || b->bullet.direction == KEY_DOWN) {
-            b->bullet.pos = (Rectangle){position->x,position->y,15,45};
+            b->bullet.pos = (Rectangle){position->x,position->y,15,45}; //15, 45
         }
         if(b->bullet.direction == KEY_LEFT || b->bullet.direction == KEY_RIGHT) {
             b->bullet.pos = (Rectangle){position->x,position->y,45,15};
