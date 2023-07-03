@@ -213,17 +213,17 @@ void map4_setup(Game *g){
 
 void map5_setup(Game *g){
     g->maps[5].num_barriers = 4;
-    g->maps[5].barriers[0] = (Rectangle) {g->screenWidth/5, 0.57 * g->screenHeight, 30, 0.47 * g->screenHeight};
-    g->maps[5].barriers[1] = (Rectangle) {2*(g->screenWidth/5), 100, 30, 0.47 * g->screenHeight};
-    g->maps[5].barriers[2] = (Rectangle) {3*(g->screenWidth/5), 0.57 * g->screenHeight, 30, 0.47 * g->screenHeight};
-    g->maps[5].barriers[3] = (Rectangle) {2*(g->screenWidth/5), 100, 30, 0.47 * g->screenHeight};
+    g->maps[5].barriers[0] = (Rectangle) {g->screenWidth/5, 0.57 * g->screenHeight, 30, g->screenHeight/5};
+    g->maps[5].barriers[1] = (Rectangle) {2*(g->screenWidth/5), 100, 30, g->screenHeight/5};
+    g->maps[5].barriers[2] = (Rectangle) {3*(g->screenWidth/5), 0.57 * g->screenHeight, 30, g->screenHeight/5};
+    g->maps[5].barriers[3] = (Rectangle) {4*(g->screenWidth/5), 100, 30, g->screenHeight/5};
     g->maps[5].color = BLACK;
     g->maps[5].door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/2 - SCREEN_BORDER/2, SCREEN_BORDER, 50};
     g->maps[5].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2 - SCREEN_BORDER/2, 5, 50};
     g->maps[5].num_enemies = 4;
     g->maps[5].door_locked = 1;
     for(int i=0; i< g->maps[5].num_enemies; i++){
-        g->maps[5].enemies[i].pos = (Rectangle) { 0.4*g->screenWidth, 0.15*g->screenHeight, STD_SIZE_X, STD_SIZE_Y};
+        g->maps[5].enemies[i].pos = (Rectangle) {g->screenWidth -(SCREEN_BORDER + STD_SIZE_X), g->screenHeight/2 - STD_SIZE_Y/2, STD_SIZE_X, STD_SIZE_Y};
         g->maps[5].enemies[i].color = BLUE;
         g->maps[5].enemies[i].speed = 6;
         g->maps[5].enemies[i].direction = KEY_RIGHT + (rand() % 4);
@@ -253,7 +253,7 @@ void map6_setup(Game *g){
     g->maps[6].barriers[1] = (Rectangle) {g->screenWidth/5 + g->screenWidth/2, g->screenHeight/2 - 50, 100, 100};
     g->maps[6].color = BLACK;
     g->maps[6].door = (Rectangle) {g->screenWidth - (50 + SCREEN_BORDER), g->screenHeight - SCREEN_BORDER, 50, SCREEN_BORDER};
-    g->maps[6].prev_door = (Rectangle) {g->screenWidth-(SCREEN_BORDER+5), g->screenHeight/2 - SCREEN_BORDER/2, SCREEN_BORDER, 50};
+    g->maps[6].prev_door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2 - SCREEN_BORDER/2, SCREEN_BORDER, 50};
     g->maps[6].num_enemies = 5;
     g->maps[6].door_locked = 1;
     for(int i=0; i< g->maps[6].num_enemies; i++){
@@ -294,10 +294,10 @@ void map6_setup(Game *g){
 void map7_setup(Game *g) {
     g->maps[7].num_barriers = 5;
     g->maps[7].barriers[0] = (Rectangle) {g->screenWidth * 0.17, g->screenHeight/4, g->screenWidth/10, 10};
-    g->maps[7].barriers[1] = (Rectangle) {g->screenWidth * 0.17, g->screenHeight/4, g->screenWidth/10, 10};
-    g->maps[7].barriers[2] = (Rectangle) {g->screenWidth/2 - (g->screenWidth/10)/2 , g->screenHeight - 5, g->screenWidth/10, 10};
-    g->maps[7].barriers[3] = (Rectangle) {g->screenWidth/2 + g->screenWidth * 0.18, g->screenHeight/2 + g->screenHeight/4, g->screenWidth/10, 10};
-    g->maps[7].barriers[3] = (Rectangle) {g->screenWidth/2 + g->screenWidth * 0.18, g->screenHeight/2 + g->screenHeight/4, g->screenWidth/10, 10};
+    g->maps[7].barriers[1] = (Rectangle) {g->screenWidth * 0.17, g->screenHeight/2 + g->screenHeight/4, g->screenWidth/10, 10};
+    g->maps[7].barriers[2] = (Rectangle) {g->screenWidth/2 - (g->screenWidth/10)/2 , g->screenHeight/2 - 5, g->screenWidth/10, 10};
+    g->maps[7].barriers[3] = (Rectangle) {g->screenWidth/2 + g->screenWidth * 0.18, g->screenHeight/4, g->screenWidth/10, 10};
+    g->maps[7].barriers[4] = (Rectangle) {g->screenWidth/2 + g->screenWidth * 0.18, g->screenHeight/2 + g->screenHeight/4, g->screenWidth/10, 10};
     g->maps[7].color = BLACK;
     g->maps[7].door = (Rectangle) {SCREEN_BORDER, g->screenHeight/2 - SCREEN_BORDER/2, 5, 50};
     g->maps[7].prev_door = (Rectangle) {g->screenWidth - (50 + SCREEN_BORDER), SCREEN_BORDER, 50, SCREEN_BORDER};
@@ -368,7 +368,6 @@ void map8_setup(Game *g){
     g->boss.bossBullet2.color = GREEN;
     g->boss.bossBullet2.default_pos = (Rectangle){5000,5000,45,15};
     g->boss.bossBullet2.speed = 10;
-
 }
 
 void resetMap(Game *g){
