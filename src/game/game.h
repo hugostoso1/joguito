@@ -55,7 +55,7 @@ typedef struct Map
     Rectangle door;
     Rectangle prev_door;
     Color color;
-    Enemy enemies[10];
+    Enemy enemies[25];
     int num_enemies;
     Rectangle special_item;
     int draw_special_item;
@@ -93,7 +93,6 @@ void update_enemy_pos(Game *g, Enemy *e);
 void update_boss_pos(Game *g, Boss *B);
 void update_hero_pos(Game *g);
 void shoot(Hero *b, Rectangle *position, Game *g);
-void update_bullet_pos(Hero *b, Game *g);
 void update_bullet(Bullet *b, Bullet *b2, Game*g);
 void bulletCollison(Bullet *b1, Bullet *b2);
 int hasEnemies(Game *g);

@@ -96,7 +96,6 @@ void UpdateGame(Game *g)
             if(!g->hero.special) {
                 if(g->curr_map == 8)
                 g->gameover = 1;
-                printf("demo\n");
                 resetMap(g);
                 continue;
             }
@@ -107,14 +106,12 @@ void UpdateGame(Game *g)
             if(!g->hero.special) {
                 if(g->curr_map == 8)
                 g->gameover = 1;
-                printf("fi do demo\n");
                 resetMap(g);
                 continue;
             }
         }
 
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos)){
-          //  printf("fi do demo 2\n");
             continue;
 
         }

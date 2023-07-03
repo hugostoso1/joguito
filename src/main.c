@@ -223,9 +223,6 @@ int main(void)
             strcat(third, aux);
         }
 
-/*         printf("%s\n%s\n%s\n", third, first, second);
-        printf("\n"); */
-
         for (i = 0; i < num_lines; i++) {
         free(lines[i]);  // Libera a memória alocada para cada string
     } 
@@ -246,8 +243,7 @@ int main(void)
             BeginDrawing();
             ClearBackground(BLACK);
             DrawText("VITÓRIA!! :)", GetScreenWidth() / 3 - MeasureText("VITÓRIA!! :)", 55) , 2 * GetScreenHeight() / 20  , 200, GOLD);
-          //  DrawText("Pontuações:",GetScreenWidth() / 3 - MeasureText("Pontuações:", 55) , 2 * GetScreenHeight() / 20 + 350 , 70, GOLD);
-            
+        
             if(num_lines <= 2){
                  DrawText(davez, GetScreenWidth() / 2 - MeasureText(davez, 55) / 2, 4 * GetScreenHeight() / 20 + 300, 55, GOLD);
             }
