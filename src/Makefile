@@ -3,7 +3,7 @@ LIBS=-l:libraylib.a -pthread -ldl -lm -lxcb -lX11
 
 # Compilar laboratório
 build: main.c ./barrier/barrier.o ./bullet/bullet.o ./enemy/enemy.o ./game/game.o ./hero/hero.o ./maps/maps.o ./boss/boss.o
-	gcc main.c ./barrier/barrier.o ./bullet/bullet.o ./maps/maps.o ./boss/boss.o ./game/game.o ./hero/hero.o ./enemy/enemy.o -o jogo -lraylib 
+	gcc main.c ./barrier/barrier.o ./bullet/bullet.o ./maps/maps.o ./boss/boss.o ./game/game.o ./hero/hero.o ./enemy/enemy.o -o jogo -lraylib
 
 
 # Quando quiser adicionar um módulo novo, coloque
@@ -21,7 +21,7 @@ run: jogo
 # limpar a pasta de artefatos de compilação, etc.
 # Não se esqueça de adicionar seu módulo depois de `jogo`
 clean:
-	rm jogo
+	rm jogo barrier/barrier.o boss/boss.o bullet/bullet.o enemy/enemy.o game/game.o hero/hero.o maps/maps.o
 
 .PHONY: run clean
 

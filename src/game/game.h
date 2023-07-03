@@ -31,8 +31,10 @@ typedef struct Boss
     int speed;
     int direction;
     int draw;
+    int dead;
     int life;
-    Bullet missile;
+    Bullet bossBullet;
+    Bullet bossBullet2;
 } Boss;
 
 typedef struct Hero
@@ -41,6 +43,7 @@ typedef struct Hero
     Color color;
     int speed;
     int special;
+    int kill;
     Bullet bullet;
     Bullet bullet2;
 } Hero;
@@ -52,7 +55,7 @@ typedef struct Map
     Rectangle door;
     Rectangle prev_door;
     Color color;
-    Enemy enemies[10];
+    Enemy enemies[25];
     int num_enemies;
     Rectangle special_item;
     int draw_special_item;
@@ -70,6 +73,7 @@ typedef struct Game
     int screenWidth;
     int screenHeight;
     int gameover;
+    int victory;
     int score;
     char mode;
     Boss boss;
@@ -89,14 +93,17 @@ void update_enemy_pos(Game *g, Enemy *e);
 void update_boss_pos(Game *g, Boss *B);
 void update_hero_pos(Game *g);
 void shoot(Hero *b, Rectangle *position, Game *g);
-void update_bullet_pos(Hero *b, Game *g);
-void shootEnemy(Bullet *b, Rectangle *position, Game *g);
-void update_enemyBullet_pos(Enemy *e, Game *g);
+void update_bullet(Bullet *b, Bullet *b2, Game*g);
 void bulletCollison(Bullet *b1, Bullet *b2);
+int hasEnemies(Game *g);
 void draw_map(Game *g);
 void resetMap(Game *g);
 void map0_setup(Game *g);
 void map1_setup(Game *g);
 void map2_setup(Game *g);
 void map3_setup(Game *g);
+void map4_setup(Game *g);
+void map5_setup(Game *g);
+void map6_setup(Game *g);
+void map7_setup(Game *g);
 void map8_setup(Game *g);
