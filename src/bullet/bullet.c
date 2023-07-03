@@ -122,7 +122,7 @@ void update_bullet(Bullet *b, Bullet *b2, Game *g) {
     }
 }
 
-/*void update_bullet_pos(Hero *h, Game *g){
+void update_bullet_pos(Hero *h, Game *g){
     Bullet *b = &h->bullet;
     Bullet *b2 = &h->bullet2;
     if(b->active)
@@ -220,7 +220,7 @@ void update_bullet(Bullet *b, Bullet *b2, Game *g) {
             }
         }
     }
-}*/
+}
 
 void bulletCollison(Bullet *b1, Bullet *b2){
     if(CheckCollisionRecs(b1->pos, b2->pos)){

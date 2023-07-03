@@ -23,10 +23,10 @@ int main(void)
     int select = 1; // 1 normal, 0 hard
     while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(BLUE);
-        DrawText("ESCREVA UM NICKNAME", GetScreenWidth() / 2 - MeasureText("ESCREVA UM NICKNAME", 55) / 2, GetScreenHeight() / 2 - 50, 55, BLACK);
+        ClearBackground(BLACK);
+        DrawText("ESCREVA UM NICKNAME", GetScreenWidth() / 2 - MeasureText("ESCREVA UM NICKNAME", 55) / 2, GetScreenHeight() / 2 - 50, 55, GOLD);
         if(countNick) {
-            DrawText(nickname, GetScreenWidth() / 2 - MeasureText(nickname, 35) / 2, GetScreenHeight()- 150, 35, BLACK);
+            DrawText(nickname, GetScreenWidth() / 2 - MeasureText(nickname, 35) / 2, GetScreenHeight()- 150, 35, GOLD);
         }
         EndDrawing();
         int key = GetKeyPressed();
@@ -49,8 +49,8 @@ int main(void)
     
     while(!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(BLUE);
-        DrawText("ESCOLHA UM MODO DE JOGO:", GetScreenWidth() / 2 - MeasureText("ESCOLHA UM MODO DE JOGO:", 55) / 2, GetScreenHeight() / 2 - 75, 55, BLACK);
+        ClearBackground(BLACK);
+        DrawText("ESCOLHA UM MODO DE JOGO:", GetScreenWidth() / 2 - MeasureText("ESCOLHA UM MODO DE JOGO:", 55) / 2, GetScreenHeight() / 2 - 75, 55, GOLD);
         if(IsKeyDown(KEY_DOWN)) {
             select = 0;
         } else if (IsKeyDown(KEY_UP)) {
@@ -59,9 +59,9 @@ int main(void)
 
         if(select) {
             DrawText("NORMAL GAME", GetScreenWidth() / 2 - MeasureText("NORMAL GAME", 55) / 2, GetScreenHeight() - 230, 55, WHITE);
-            DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 40) / 2, GetScreenHeight() - 150, 40, BLACK);
+            DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 40) / 2, GetScreenHeight() - 150, 40, GOLD);
         } else {
-            DrawText("NORMAL GAME", GetScreenWidth() / 2 - MeasureText("NORMAL GAME", 40) / 2, GetScreenHeight() - 230, 40, BLACK);
+            DrawText("NORMAL GAME", GetScreenWidth() / 2 - MeasureText("NORMAL GAME", 40) / 2, GetScreenHeight() - 230, 40, GOLD);
             DrawText("HARD GAME", GetScreenWidth() / 2 - MeasureText("HARD GAME", 55) / 2, GetScreenHeight() - 150, 55, WHITE);
         }
         EndDrawing();
@@ -89,93 +89,103 @@ int main(void)
     long micros = ((seconds * 1000000) + end.tv_usec) - (start.tv_usec);
  
 
-    FILE *p = fopen("pontuacoes.txt", "a");
-    fprintf(p, "%s\n%ld\n", nickname, seconds);
-    fclose(p);  //le o da rodada
+    char first[100];
+    char second[100];
+    char third[100];
+    int num_lines;
 
-    FILE *arquivo = fopen("pontuacoes.txt", "r");
-    char linha[100];
-    char *lines[100];  // Array para armazenar as strings
 
-    // Abre o arquivo para leitura
+    if(game.victory == 1){
 
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return 1;
-    }
+        FILE *p = fopen("pontuacoes.txt", "a");
+        fprintf(p, "%s\n%ld\n", nickname, seconds);
+        fclose(p);  //le o da rodada
 
-    int i = 0;
+    
 
-    // Lê cada linha do arquivo
-    while (fgets(linha, 100, arquivo) != NULL) {
-        // Aloca memória para a string atual
-        lines[i] = malloc(strlen(linha) + 1);
-        if (lines[i] == NULL) {
-            printf("Erro ao alocar memória.\n");
+        FILE *arquivo = fopen("pontuacoes.txt", "r");
+        char linha[100];
+        char *lines[100];  // Array para armazenar as strings
+
+        // Abre o arquivo para leitura
+
+        if (arquivo == NULL) {
+            printf("Erro ao abrir o arquivo.\n");
             return 1;
         }
 
-        // Copia a linha lida para a string atual
-        strcpy(lines[i], linha);
-        i++;
-    }
+        int i = 0;
 
-    int num_lines = i; // Número total de linhas lidas
+        // Lê cada linha do arquivo
+        while (fgets(linha, 100, arquivo) != NULL) {
+            // Aloca memória para a string atual
+            lines[i] = malloc(strlen(linha) + 1);
+            if (lines[i] == NULL) {
+                printf("Erro ao alocar memória.\n");
+                return 1;
+            }
 
-    // Fecha o arquivo
-    fclose(arquivo);
-
-
-    //leitura das coisas nos arquivos
-
-    int v[num_lines/2];
-    int vet = 0;
-    int l = 1;
-    i = 0;
-
-    while (1) {
-        v[vet] = atoi(lines[l]);
-        l++;
-        l++;
-        vet++;
-        if (l > num_lines) {
-            break;
+            // Copia a linha lida para a string atual
+            strcpy(lines[i], linha);
+            i++;
         }
-    }
 
-    if (num_lines > 8) {
-    FILE *pimba = fopen("pontuacoes.txt", "w");
-    if (pimba == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return 1;
-    }
+        num_lines = i; // Número total de linhas lidas
 
-    // Escrever a última linha primeiro
-    fprintf(pimba, "%s%d\n", lines[(num_lines - 2)], v[(num_lines/2 - 1)]);
+        // Fecha o arquivo
+        fclose(arquivo);
 
-    // Escrever as outras linhas e valores
-    for (int j = 0; j < 8/2 - 1; j++) {
-        fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
-    }}
 
-    if(num_lines <= 8){
+        //leitura das coisas nos arquivos
+
+        int v[num_lines/2];
+        int vet = 0;
+        int l = 1;
+        i = 0;
+
+        while (1) {
+            v[vet] = atoi(lines[l]);
+            l++;
+            l++;
+            vet++;
+            if (l > num_lines) {
+                break;
+            }
+        }
+
+        if (num_lines > 8 && game.victory == 1) {
         FILE *pimba = fopen("pontuacoes.txt", "w");
-    if (pimba == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return 1;
+        if (pimba == NULL) {
+            printf("Erro ao abrir o arquivo.\n");
+            return 1;
+        }
+
+        // Escrever a última linha primeiro
+        fprintf(pimba, "%s%d\n", lines[(num_lines - 2)], v[(num_lines/2 - 1)]);
+
+        // Escrever as outras linhas e valores
+        for (int j = 0; j < 8/2 - 1; j++) {
+            fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
+        }}
+
+        if(num_lines <= 8 && game.victory == 1){
+            FILE *pimba = fopen("pontuacoes.txt", "w");
+        if (pimba == NULL) {
+            printf("Erro ao abrir o arquivo.\n");
+            return 1;
+        }
+
+        // Escrever a última linha primeiro
+        fprintf(pimba, "%s%d\n", lines[(num_lines - 2)], v[(num_lines/2 - 1)]);
+
+        // Escrever as outras linhas e valores
+        for (int j = 0; j < num_lines/2 - 1; j++) {
+            fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
+
+        }
+
+        fclose(pimba);
     }
-
-    // Escrever a última linha primeiro
-    fprintf(pimba, "%s%d\n", lines[(num_lines - 2)], v[(num_lines/2 - 1)]);
-
-    // Escrever as outras linhas e valores
-    for (int j = 0; j < num_lines/2 - 1; j++) {
-        fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
-
-    }
-
-    fclose(pimba);
-}
 
 
         for(int i=0; i<num_lines; i++){
@@ -187,20 +197,17 @@ int main(void)
             }
         }
         
-        char first[100];
-        char second[100];
-        char third[100];
-        char total[500] = "";
+
         nickname[strlen(nickname)-1] = ' ';
 
-        if (num_lines >= 2)
+        if (num_lines >= 2 && game.victory == 1)
         {
             strcpy(first, lines[0]);
 
             strcat(first, lines[1]);
         }
 
-        if (num_lines >= 4)
+        if (num_lines >= 4 && game.victory == 1)
         {
             strcpy(second, lines[2]);
 
@@ -209,49 +216,62 @@ int main(void)
         char aux[500];
         sprintf(aux, "%ld", seconds);
 
-        if (num_lines >= 6)
+        if (num_lines >= 6 && game.victory == 1)
         {
             strcpy(third, nickname);
 
             strcat(third, aux);
         }
 
-        printf("%s\n%s\n%s\n", third, first, second);
-        printf("\n");
+/*         printf("%s\n%s\n%s\n", third, first, second);
+        printf("\n"); */
 
+        for (i = 0; i < num_lines; i++) {
+        free(lines[i]);  // Libera a memória alocada para cada string
+    } 
+}
+
+
+    char davez[100];
+    char axiliar[500];
+        sprintf(axiliar, "%ld", seconds);
+            strcpy(davez, nickname);
+
+            strcat(davez, axiliar);
         
-
-            
-
-
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
-     //   if(game.victory){
+        if(game.victory == 1){
 
             BeginDrawing();
-            ClearBackground(RAYWHITE);
-            DrawText("PARABÉNS", GetScreenWidth() / 3 - MeasureText("PARABÉNS", 55) , 2 * GetScreenHeight() / 20  , 200, BLACK);
-            DrawText("Pontuações:",GetScreenWidth() / 3 - MeasureText("Pontuações:", 55) , 2 * GetScreenHeight() / 20 + 350 , 70, BLACK);
-            DrawText(third,GetScreenWidth() / 2.2 , 4 * GetScreenHeight() / 20 + 350 , 55, BLACK);
-            DrawText(first,GetScreenWidth() / 2.2 , 6 * GetScreenHeight() / 20 + 350 , 55, BLACK);
-            DrawText(second,GetScreenWidth() / 2.2 , 8 * GetScreenHeight() / 20 + 350 , 55, BLACK);
+            ClearBackground(BLACK);
+            DrawText("VITÓRIA!! :)", GetScreenWidth() / 3 - MeasureText("VITÓRIA!! :)", 55) , 2 * GetScreenHeight() / 20  , 200, GOLD);
+          //  DrawText("Pontuações:",GetScreenWidth() / 3 - MeasureText("Pontuações:", 55) , 2 * GetScreenHeight() / 20 + 350 , 70, GOLD);
+            
+            if(num_lines <= 2){
+                 DrawText(davez, GetScreenWidth() / 2 - MeasureText(davez, 55) / 2, 4 * GetScreenHeight() / 20 + 300, 55, GOLD);
+            }
+            if(num_lines > 2 && num_lines <= 4){
+                 DrawText(davez, GetScreenWidth() / 2 - MeasureText(davez, 55) / 2, 4 * GetScreenHeight() / 20 + 300, 55, GOLD);
+                 DrawText(first, GetScreenWidth() / 2 - MeasureText(first, 55) / 2, 6 * GetScreenHeight() / 20 + 300, 55, GOLD);
+            }
+            if (num_lines >= 6){
+                DrawText(third, GetScreenWidth() / 2 - MeasureText(third, 55) / 2, 4 * GetScreenHeight() / 20 + 300, 55, GOLD);
+                DrawText(first, GetScreenWidth() / 2 - MeasureText(first, 55) / 2, 6 * GetScreenHeight() / 20 + 300, 55, GOLD);
+                DrawText(second, GetScreenWidth() / 2 - MeasureText(second, 55) / 2, 8 * GetScreenHeight() / 20 + 300, 55, GOLD);
+            }
+
             EndDrawing();
 
         
-    /*     } else {
+        } else {
             BeginDrawing();
-            ClearBackground(RAYWHITE);
-            DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 55) / 2, GetScreenHeight() / 2 - 50, 55, BLACK);
+            ClearBackground(BLACK);
+            DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 100) / 2, GetScreenHeight() / 2 - 50, 100, GOLD);
             EndDrawing();
-          }  */
+        }   
         
 
-    }
-
-
-      for (i = 0; i < num_lines; i++) {
-        free(lines[i]);  // Libera a memória alocada para cada string
-      //  free(y[i]);
     }
 
     return 0;

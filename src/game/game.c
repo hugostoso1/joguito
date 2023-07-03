@@ -3,12 +3,12 @@
 #include <stdlib.h>
 
 int hasEnemies(Game *g) {
-    Map *map = &g->maps[8];
+    Map *map = &g->maps[g->curr_map];
     for (int i = 0; i < map->num_enemies; i++) {
         if (map->enemies[i].draw_enemy)
             return 1;
     }
-    return 0;
+    return 0; //n tem
 }
 
 void InitGame(Game *g)
@@ -17,18 +17,18 @@ void InitGame(Game *g)
     g->num_maps = 10;
     g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
     g->hero.color = WHITE;
-    g->hero.speed = 10;
+    g->hero.speed = 15;
     g->hero.special = 0;
 
     g->hero.bullet.default_pos = (Rectangle){5500,5500,45,10};
     g->hero.bullet.direction = KEY_RIGHT;
     g->hero.bullet.color = PURPLE;
-    g->hero.bullet.speed = 100;
+    g->hero.bullet.speed = 20;
     g->hero.bullet.active = 0;
     g->hero.bullet2.default_pos = (Rectangle){5500,5500,45,10};
     g->hero.bullet2.direction = KEY_RIGHT;
     g->hero.bullet2.color = PURPLE;
-    g->hero.bullet2.speed = 50;
+    g->hero.bullet2.speed = 20;
     g->hero.bullet2.active = 0;
     g->gameover = 0;
     
@@ -96,6 +96,7 @@ void UpdateGame(Game *g)
             if(!g->hero.special) {
                 if(g->curr_map == 8)
                 g->gameover = 1;
+                printf("demo\n");
                 resetMap(g);
                 continue;
             }
@@ -106,13 +107,17 @@ void UpdateGame(Game *g)
             if(!g->hero.special) {
                 if(g->curr_map == 8)
                 g->gameover = 1;
+                printf("fi do demo\n");
                 resetMap(g);
                 continue;
             }
         }
 
-        if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
+        if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos)){
+          //  printf("fi do demo 2\n");
             continue;
+
+        }
         
         if (g->hero.special)
         {
@@ -124,6 +129,8 @@ void UpdateGame(Game *g)
             continue;
         }
         if(g->curr_map != 8){
+            if(!hasEnemies(g))
+            continue;
             resetMap(g);
         }
     }
