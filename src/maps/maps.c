@@ -95,7 +95,7 @@ void map1_setup(Game *g)
         g->maps[1].enemies[i].enemyBullet2.speed = 3;
         g->maps[1].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[1].enemies[rand()%8].has_key = 1;
+    g->maps[1].enemies[rand()%5].has_key = 1;
     g->maps[1].special_item = (Rectangle){4 * g->screenWidth / 5, 20, 15, 15};
     g->maps[1].draw_special_item = 1;
     g->maps[1].prev_map = 0;
@@ -169,7 +169,7 @@ void map3_setup(Game *g){
         g->maps[3].enemies[i].enemyBullet2.speed = 5;
         g->maps[3].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[3].enemies[rand()%10].has_key = 1;
+    g->maps[3].enemies[rand()%7].has_key = 1;
     g->maps[3].special_item = (Rectangle) {4*g->screenWidth/5, 20, 15, 15};
     g->maps[3].draw_special_item = 1;
     g->maps[3].prev_map = 2;
@@ -311,7 +311,7 @@ void map7_setup(Game *g) {
         g->maps[7].enemies[i].enemyBullet2.speed = 5;
         g->maps[7].enemies[i].enemyBullet2.direction = KEY_LEFT;
     }
-    g->maps[7].enemies[rand()%6].has_key = 1;
+    g->maps[7].enemies[rand()%8].has_key = 1;
     g->maps[7].special_item = (Rectangle) {g->screenWidth/2,g->screenHeight/2, 15, 15};
     g->maps[7].draw_special_item = 1;
     g->maps[7].prev_map = 6;
