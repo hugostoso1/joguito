@@ -1,7 +1,6 @@
 #include "../raylib.h"
 #include "./game.h"
 #include <stdlib.h>
-#include  <stdio.h>
 
 int hasEnemies(Game *g) {
     Map *map = &g->maps[8];
@@ -97,7 +96,6 @@ void UpdateGame(Game *g)
             if(!g->hero.special) {
                 if(g->curr_map == 8)
                 g->gameover = 1;
-                 printf("aqui da erro tambem a");
                 resetMap(g);
                 continue;
             }
@@ -108,7 +106,6 @@ void UpdateGame(Game *g)
             if(!g->hero.special) {
                 if(g->curr_map == 8)
                 g->gameover = 1;
-                printf("aqui da erro");
                 resetMap(g);
                 continue;
             }
@@ -117,7 +114,6 @@ void UpdateGame(Game *g)
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos))
             continue;
         
-
         if (g->hero.special)
         {
             map->enemies[i].draw_enemy = 0;
@@ -128,7 +124,6 @@ void UpdateGame(Game *g)
             continue;
         }
         if(g->curr_map != 8){
-            printf("pra puta que pariu\n");
             resetMap(g);
         }
     }
@@ -144,14 +139,18 @@ void UpdateGame(Game *g)
     if (CheckCollisionRecs(g->hero.pos, map->door) && !map->door_locked)
     {
         g->curr_map = map->next_map;
-        g->hero.pos = (Rectangle){50, 200, STD_SIZE_X, STD_SIZE_Y};
+        float x = (g->maps[g->curr_map].prev_door.x >= g->screenWidth/2) ? g->maps[g->curr_map].prev_door.x - STD_SIZE_X: g->maps[g->curr_map].prev_door.x + STD_SIZE_X;
+        float y = (g->maps[g->curr_map].prev_door.y >= g->screenHeight/2) ? g->maps[g->curr_map].prev_door.y - STD_SIZE_Y: g->maps[g->curr_map].prev_door.y + STD_SIZE_Y;
+        g->hero.pos = (Rectangle){x, y, STD_SIZE_X, STD_SIZE_Y};
         g->hero.special = 0;
     }
 
     if (map->prev_map != -1 && CheckCollisionRecs(g->hero.pos, map->prev_door))
     {
         g->curr_map = map->prev_map;
-        g->hero.pos = (Rectangle){g->screenWidth - 50, g->screenHeight / 3, STD_SIZE_X, STD_SIZE_Y};
+        float x = (g->maps[g->curr_map].door.x >= g->screenWidth/2) ? g->maps[g->curr_map].door.x - STD_SIZE_X: g->maps[g->curr_map].door.x + STD_SIZE_X;
+        float y = (g->maps[g->curr_map].door.y >= g->screenHeight/2) ? g->maps[g->curr_map].door.y - STD_SIZE_Y: g->maps[g->curr_map].door.y + STD_SIZE_Y;
+        g->hero.pos = (Rectangle){x, y, STD_SIZE_X, STD_SIZE_Y};
         g->hero.special = 0;
     }
 
@@ -162,7 +161,6 @@ void UpdateGame(Game *g)
         }
 
         if(CheckCollisionRecs(g->hero.pos, g->boss.pos)) {
-            printf("hero/vilon\n");
             g->gameover = 1;
         }
 
