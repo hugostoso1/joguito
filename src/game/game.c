@@ -18,7 +18,7 @@ void InitGame(Game *g)
     g->num_maps = 10;
     g->hero.pos = (Rectangle){150, 300, STD_SIZE_X, STD_SIZE_Y};
     g->hero.color = WHITE;
-    g->hero.speed = 15;
+    g->hero.speed = 13;
     g->hero.special = 0;
 
     g->hero.bullet.default_pos = (Rectangle){5500,5500,45,10};
