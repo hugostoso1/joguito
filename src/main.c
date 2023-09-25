@@ -10,13 +10,13 @@
 
 int main(void)
 {
-    Game game;
-    game.screenWidth = 1500;
-    game.screenHeight = 700;
+    Game *game = (Game*) malloc (sizeof(Game));
+    game->screenWidth = 1500;
+    game->screenHeight = 700;
 
-    InitWindow(game.screenWidth, game.screenHeight, "Aedsinho's quest");
+    InitWindow(game->screenWidth, game->screenHeight, "Aedsinho's quest");
     SetTargetFPS(60);
-    InitGame(&game);
+    InitGame(game);
 
     char nickname[50];
     int countNick = 0;
@@ -68,15 +68,15 @@ int main(void)
         if(IsKeyPressed(KEY_ENTER)) break;
     }
 
-    game.mode = (select) ? 'N' : 'H';
+    game->mode = (select) ? 'N' : 'H';
     struct timeval start, end;
     gettimeofday(&start, NULL);
     
 
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        UpdateDrawFrame(&game);
-        if (game.gameover)
+        UpdateDrawFrame(game);
+        if (game->gameover)
             break;
         
     }
@@ -94,8 +94,9 @@ int main(void)
     char third[100];
     int num_lines;
 
+    //game.victory = 1;
 
-    if(game.victory == 1){
+    if(game->victory == 1){
 
         FILE *p = fopen("pontuacoes.txt", "a");
         fprintf(p, "%s\n%ld\n", nickname, seconds);
@@ -153,7 +154,7 @@ int main(void)
             }
         }
 
-        if (num_lines > 8 && game.victory == 1) {
+        if (num_lines > 8 && game->victory == 1) {
         FILE *pimba = fopen("pontuacoes.txt", "w");
         if (pimba == NULL) {
             printf("Erro ao abrir o arquivo.\n");
@@ -168,7 +169,7 @@ int main(void)
             fprintf(pimba, "%s%d\n", lines[j*2], v[j]);
         }}
 
-        if(num_lines <= 8 && game.victory == 1){
+        if(num_lines <= 8 && game->victory == 1){
             FILE *pimba = fopen("pontuacoes.txt", "w");
         if (pimba == NULL) {
             printf("Erro ao abrir o arquivo.\n");
@@ -200,14 +201,14 @@ int main(void)
 
         nickname[strlen(nickname)-1] = ' ';
 
-        if (num_lines >= 2 && game.victory == 1)
+        if (num_lines >= 2 && game->victory == 1)
         {
             strcpy(first, lines[0]);
 
             strcat(first, lines[1]);
         }
 
-        if (num_lines >= 4 && game.victory == 1)
+        if (num_lines >= 4 && game->victory == 1)
         {
             strcpy(second, lines[2]);
 
@@ -216,7 +217,7 @@ int main(void)
         char aux[500];
         sprintf(aux, "%ld", seconds);
 
-        if (num_lines >= 6 && game.victory == 1)
+        if (num_lines >= 6 && game->victory == 1)
         {
             strcpy(third, nickname);
 
@@ -238,7 +239,7 @@ int main(void)
         
     while (!IsKeyDown(KEY_ENTER) && !WindowShouldClose())
     {
-        if(game.victory == 1){
+        if(game->victory == 1){
 
             BeginDrawing();
             ClearBackground(BLACK);

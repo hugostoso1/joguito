@@ -1,6 +1,7 @@
 #include "../raylib.h"
 #include "./game.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int hasEnemies(Game *g) {
     Map *map = &g->maps[g->curr_map];
@@ -95,7 +96,7 @@ void UpdateGame(Game *g)
             map->enemies[i].enemyBullet.pos = map->enemies[i].enemyBullet.default_pos;
             if(!g->hero.special) {
                 if(g->curr_map == 8)
-                g->gameover = 1;
+                g->gameover = 1;                
                 resetMap(g);
                 continue;
             }
@@ -112,6 +113,7 @@ void UpdateGame(Game *g)
         }
 
         if (!CheckCollisionRecs(g->hero.pos, map->enemies[i].pos)){
+
             continue;
 
         }
@@ -146,6 +148,7 @@ void UpdateGame(Game *g)
         float x = (g->maps[g->curr_map].prev_door.x >= g->screenWidth/2) ? g->maps[g->curr_map].prev_door.x - STD_SIZE_X: g->maps[g->curr_map].prev_door.x + STD_SIZE_X;
         float y = (g->maps[g->curr_map].prev_door.y >= g->screenHeight/2) ? g->maps[g->curr_map].prev_door.y - STD_SIZE_Y: g->maps[g->curr_map].prev_door.y + STD_SIZE_Y;
         g->hero.pos = (Rectangle){x, y, STD_SIZE_X, STD_SIZE_Y};
+        if(g->curr_map == 8) g->hero.pos = (Rectangle){g->screenWidth/15*14, g->screenHeight/2 ,STD_SIZE_X,STD_SIZE_Y};
         g->hero.special = 0;
     }
 
